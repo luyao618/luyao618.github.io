@@ -3,12 +3,41 @@ set -euo pipefail
 
 tmp_dir="$(mktemp -d)"
 tmp_override="${tmp_dir}/distill-override.yml"
+tmp_source="${tmp_dir}/source"
 tmp_site="${tmp_dir}/site"
 
 cleanup() {
   rm -rf "${tmp_dir}"
 }
 trap cleanup EXIT
+
+rsync -a \
+  --exclude .git \
+  --exclude .jekyll-cache \
+  --exclude .sass-cache \
+  --exclude _site \
+  --exclude node_modules \
+  ./ "${tmp_source}/"
+
+mkdir -p "${tmp_source}/_posts"
+cat >"${tmp_source}/_posts/2021-01-01-distill.md" <<'MARKDOWN'
+---
+layout: distill
+title: Distill
+description: Distill integration fixture.
+giscus_comments: true
+tikzjax: true
+mermaid:
+  enabled: true
+authors:
+  - name: Test Author
+    affiliations:
+      name: Test Lab
+      url: https://example.com
+---
+
+Distill integration fixture content.
+MARKDOWN
 
 cat >"${tmp_override}" <<'YAML'
 giscus:
@@ -18,22 +47,24 @@ giscus:
   category_id: DIC_kwDOExample
 YAML
 
-bundle exec jekyll build --config "_config.yml,${tmp_override}" -d "${tmp_site}" >/dev/null
+(cd "${tmp_source}" && bundle exec jekyll build --config "_config.yml,${tmp_override}" -d "${tmp_site}" >/dev/null)
 
 distill_page="${tmp_site}/blog/2021/distill/index.html"
 
-if [ -f "${distill_page}" ]; then
-  grep -q 'd-front-matter' "${distill_page}"
-  grep -q '/assets/js/distillpub/template.v2.js' "${distill_page}"
-  grep -q '/assets/js/distillpub/transforms.v2.js' "${distill_page}"
-  grep -q '/assets/js/distillpub/overrides.js' "${distill_page}"
-  grep -q '/assets/al_charts/js/mermaid-setup.js' "${distill_page}"
-  grep -q 'https://cdn.jsdelivr.net/npm/@planktimerr/tikzjax@1.0.8/dist/fonts.css' "${distill_page}"
-  grep -q 'https://cdn.jsdelivr.net/npm/@planktimerr/tikzjax@1.0.8/dist/tikzjax.js' "${distill_page}"
-  grep -q 'id="giscus_thread"' "${distill_page}"
-else
-  echo "skipping distill fixture page checks; ${distill_page} was not generated"
+if [ ! -f "${distill_page}" ]; then
+  echo "distill fixture page was not generated at ${distill_page}" >&2
+  exit 1
 fi
+
+grep -q 'd-front-matter' "${distill_page}"
+grep -q '/assets/js/distillpub/template.v2.js' "${distill_page}"
+grep -q '/assets/js/distillpub/transforms.v2.js' "${distill_page}"
+grep -q '/assets/js/distillpub/overrides.js' "${distill_page}"
+grep -q '/assets/al_charts/js/mermaid-setup.js' "${distill_page}"
+grep -q 'https://cdn.jsdelivr.net/npm/@planktimerr/tikzjax@1.0.8/dist/fonts.css' "${distill_page}"
+grep -q 'https://cdn.jsdelivr.net/npm/@planktimerr/tikzjax@1.0.8/dist/tikzjax.js' "${distill_page}"
+grep -q 'id="giscus_thread"' "${distill_page}"
+
 transforms_runtime="${tmp_site}/assets/js/distillpub/transforms.v2.js"
 distill_runtime="$(PATH="$HOME/.rbenv/shims:$PATH" bundle exec ruby -e 'spec = Gem.loaded_specs["al_folio_distill"]; puts(spec ? File.join(spec.full_gem_path, "assets/js/distillpub/transforms.v2.js") : "")')"
 if [ -f "${distill_runtime}" ]; then
