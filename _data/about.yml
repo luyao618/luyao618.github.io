@@ -6,49 +6,85 @@ profile:
   photo: /assets/img/profile-lu-yao.jpeg
   resume: /assets/pdf/lu-yao-resume.pdf
   tagline: Big Data Engineer · Full-Stack Builder · AI Agent Developer
+  subtitle_en: Senior software engineer with a decade in big data, now building full-stack product systems and AI agent workflows.
   summary:
-    - 多年大数据开发工程师，长期在数据平台、数据仓库、实时计算、用户画像和业务分析场景里做工程落地。
-    - 近年在微软持续拓展全栈开发和 AI Agent 工程能力，关注如何把数据、产品系统和 LLM 工程结合成可交付的软件。
-    - 我习惯用工程质量、业务理解和持续学习来解决问题，也在 GitHub 上持续沉淀 AI-native developer tools 与源码研究项目。
+    - 十年大数据开发工程师，数据分析师，长期在数据平台、数据仓库、实时计算、用户画像和业务分析场景里做工程落地。
+    - 在微软持续拓展全栈开发和 AI Agent 工程能力，关注如何把数据、产品系统和 LLM 工程结合成可交付的软件。
+    - 开源社区活跃者，GitHub 收获近 2K 星标，多个知名项目贡献者。
+  summary_en:
+    - I have spent the past decade turning data platforms, warehouses, real-time pipelines, user profiles, and analytics systems into production software.
+    - At Microsoft, I work across full-stack development and AI agent engineering, connecting data, product systems, and LLM workflows into usable tools.
+    - Active in open source, with nearly 2K GitHub stars and contributions to well-known projects.
 
 contacts:
   - label: Email
     value: 364939526@qq.com
     href: mailto:364939526@qq.com
+    icon: fa-solid fa-envelope
   - label: Phone
     value: "+86 136 9977 4962"
     href: tel:+8613699774962
+    icon: fa-solid fa-phone
   - label: WeChat
     value: luyao4962
+    icon: fa-brands fa-weixin
   - label: GitHub
     value: github.com/luyao618
     href: https://github.com/luyao618
+    icon: fa-brands fa-github
+  - label: Zhihu
+    value: zhihu.com/people/LuisHome
+    href: https://www.zhihu.com/people/LuisHome
+    icon: zhihu-mark
 
 highlights:
-  - 十年左右数据与软件工程经验
-  - Microsoft Senior Software Engineer
+  - 微软高级软件工程师
+  - 十年大数据开发,数据分析和工程经验
   - 大数据 / 全栈 / AI Agent 交叉背景
+highlights_en:
+  - Senior Software Engineer, Microsoft
+  - 10 years in big data engineering and analytics
+  - Big data, full-stack, and AI agent engineering
 
 experience:
   - company: 微软中国
+    short_company: 微软
+    short_company_en: Microsoft
     logo: MS
     period: 2022.4 - 至今
-    title: Senior Software Engineer
+    period_en: Apr 2022 - Present
+    title: 高级软件工程师
+    title_en: Senior Software Engineer
   - company: 北京小米移动软件有限公司
+    short_company: 小米
+    short_company_en: Xiaomi
     logo: MI
     period: 2019.4 - 2022.3
-    title: 高级软件研发工程师
+    period_en: Apr 2019 - Mar 2022
+    title: 高级软件工程师
+    title_en: Senior Software Engineer
   - company: 美图创新科技有限公司
+    short_company: 美图
+    short_company_en: Meitu
     logo: MT
     period: 2018.4 - 2019.3
+    period_en: Apr 2018 - Mar 2019
     title: 大数据开发
+    title_en: Big Data Engineer
   - company: 创维集团酷开网络科技有限公司
+    short_company: 创维
+    short_company_en: Skyworth
     logo: CK
     period: 2016.7 - 2018.3
+    period_en: Jul 2016 - Mar 2018
     title: 大数据开发
+    title_en: Big Data Engineer
 
 education:
   school: 湖南大学
+  school_en: Hunan University
   logo: HNU
   period: 2012.9 - 2016.6
+  period_en: Sep 2012 - Jun 2016
   major: 信息与计算科学
+  major_en: Information and Computing Science

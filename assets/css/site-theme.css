@@ -1,0 +1,135 @@
+html:root {
+  --global-theme-color: #1f5d58;
+  --global-hover-color: #1f5d58;
+  --global-code-bg-color: rgba(31, 93, 88, 0.08);
+}
+
+html[data-theme="dark"] {
+  --global-theme-color: #82b8ae;
+  --global-hover-color: #82b8ae;
+  --global-code-bg-color: rgba(130, 184, 174, 0.14);
+}
+
+body.fixed-top-nav {
+  padding-top: 52px;
+}
+
+#progress,
+.progress-container {
+  top: 52px;
+}
+
+.navbar .navbar-menu-list {
+  width: 100%;
+  gap: 0.52rem;
+  align-items: center;
+}
+
+.navbar.navbar-light .navbar-nav .nav-item .nav-link {
+  border-radius: 4px;
+  padding: 0.35rem 0.58rem;
+}
+
+.navbar.navbar-light .navbar-nav .nav-item.active > .nav-link {
+  background: var(--global-theme-color);
+  color: var(--global-hover-text-color);
+  font-weight: 650;
+}
+
+.navbar.navbar-light .navbar-nav .nav-item.active > .nav-link:hover {
+  color: var(--global-hover-text-color);
+}
+
+.navbar .toggle-container {
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.navbar #light-toggle,
+.navbar .resume-language-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  min-width: 2.2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--global-text-color);
+  line-height: 1;
+  text-decoration: none;
+  transform: none;
+}
+
+.navbar .resume-language-toggle {
+  width: 2.7rem;
+  min-width: 2.7rem;
+}
+
+.navbar #light-toggle:hover,
+.navbar #light-toggle:focus-visible,
+.navbar .resume-language-toggle:hover,
+.navbar .resume-language-toggle:focus-visible {
+  background: color-mix(in srgb, var(--global-theme-color) 10%, transparent);
+  color: var(--global-theme-color);
+  outline: none;
+}
+
+.navbar .resume-language-toggle i {
+  font-size: 1.02rem;
+}
+
+.navbar .resume-language-label {
+  color: inherit;
+  font-size: 0.72rem;
+  font-weight: 760;
+}
+
+.navbar .resume-language-switch {
+  display: inline-flex;
+  align-items: center;
+}
+
+.navbar .resume-language-switch-placeholder {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.repositories .repo {
+  width: 100%;
+}
+
+.repositories .repo a,
+.repositories .repo img {
+  display: block;
+}
+
+.repositories .repo img {
+  aspect-ratio: auto 577 / 120;
+  height: auto;
+}
+
+@media (max-width: 575.98px) {
+  .navbar .navbar-menu-list {
+    width: auto;
+    gap: 0.18rem;
+  }
+
+  .navbar .toggle-container {
+    margin-left: 0;
+  }
+
+  .navbar .resume-language-switch-placeholder {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .repositories .repo {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
