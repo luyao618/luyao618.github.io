@@ -9,6 +9,46 @@ const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 const failures = [];
 
+const toRepoPath = (relPath) => relPath.split(path.sep).join("/");
+
+const listFiles = (relPath) => {
+  const absPath = path.join(root, relPath);
+  if (!fs.existsSync(absPath)) return [];
+
+  const stat = fs.statSync(absPath);
+  if (stat.isFile()) return [toRepoPath(relPath)];
+  if (!stat.isDirectory()) return [toRepoPath(relPath)];
+
+  return fs.readdirSync(absPath, { withFileTypes: true }).flatMap((entry) => {
+    const childPath = path.join(relPath, entry.name);
+    if (entry.isDirectory()) return listFiles(childPath);
+    if (entry.isFile()) return [toRepoPath(childPath)];
+    return [];
+  });
+};
+
+const readAcknowledgedOverrides = () => {
+  if (!exists(".al-folio-overrides.yml")) return new Set();
+
+  const overrides = new Set();
+  let inOverrides = false;
+  for (const line of read(".al-folio-overrides.yml").split(/\r?\n/)) {
+    if (/^overrides:\s*$/.test(line)) {
+      inOverrides = true;
+      continue;
+    }
+    if (!inOverrides) continue;
+    if (/^\S/.test(line)) break;
+
+    const match = line.match(/^  (?:"([^"]+)"|'([^']+)'|([^:#][^:]*?)):\s*$/);
+    if (match) overrides.add(match[1] || match[2] || match[3]);
+  }
+
+  return overrides;
+};
+
+const acknowledgedOverrides = readAcknowledgedOverrides();
+
 const packageJson = JSON.parse(read("package.json"));
 const scripts = packageJson.scripts || {};
 for (const forbiddenScript of ["build:css", "build:tailwind", "build:tailwind:watch"]) {
@@ -63,7 +103,14 @@ if (/gem 'al_math',\s*:git =>/.test(gemfile)) {
 
 for (const forbiddenPath of ["_includes", "_layouts", "_sass", "_scripts", "assets/tailwind", "tailwind.config.js", "assets/webfonts"]) {
   if (exists(forbiddenPath)) {
-    failures.push(`Starter must not own core component path \`${forbiddenPath}\`; move ownership to the corresponding gem.`);
+    const unacknowledgedFiles = listFiles(forbiddenPath).filter((file) => !acknowledgedOverrides.has(file));
+    if (unacknowledgedFiles.length === 0) continue;
+
+    const examples = unacknowledgedFiles.slice(0, 5).join(", ");
+    const suffix = examples ? ` Unacknowledged files: ${examples}.` : "";
+    failures.push(
+      `Starter must not own core component path \`${forbiddenPath}\` unless every local override is acknowledged in \`.al-folio-overrides.yml\`.${suffix}`
+    );
   }
 }
 
