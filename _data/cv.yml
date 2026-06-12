@@ -1,0 +1,26 @@
+cv:
+  name: Yao
+  label: Software Engineer
+  email: ""
+  location: ""
+  image: ""
+  summary: Personal technical site for AI agent engineering, product systems, and software craft.
+
+  social_networks:
+    - network: GitHub
+      username: luyao618
+
+  sections:
+    Experience: []
+    Education: []
+    Projects: []
+    Skills:
+      - name: AI Agent Engineering
+        level: ""
+        icon: fa-solid fa-hashtag
+        keywords: "Agent harness, memory systems, tool routing, product workflows"
+    Languages: []
+    Interests:
+      - name: Software Engineering
+        icon: fa-solid fa-tag
+        keywords: "AI Agent, developer tools, product engineering"
