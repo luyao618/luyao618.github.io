@@ -386,48 +386,73 @@ PR #7.
 
     // Regression guard for the EN-state TOC nesting bug (round 3 review).
     // Logs a clear console error if the first top-level TOC entry ever
-    // becomes anything other than "EXPERIENCE" — tocbot's enumeration of
-    // h2.cv-section-title headings starts at the Experience heading, so a
-    // different first entry means an h3 has been promoted (the exact
-    // regression). The literal "EXPERIENCE" matches the in-DOM value
-    // tocbot writes to TOC links on this page (round-5 smoke fix:
-    // previous "Experience" string was a false-positive every toggle).
+    // becomes anything other than the Experience heading — tocbot's
+    // enumeration of h2.cv-section-title headings starts there, so a
+    // different first entry means an h3 has been promoted.
+    //
+    // Comparison is case-insensitive on purpose. The source markdown
+    // header is "Experience" (mixed case), but `text-transform:
+    // uppercase` upcases what users see, and tocbot's choice of
+    // innerText vs. textContent for label capture is not portable
+    // across browsers (Chrome's innerText reflects CSS case, others'
+    // textContent does not). A case-sensitive literal would either
+    // false-positive on Chrome (round-5 smoke caught this) or break
+    // again the day someone removes the CSS upcase. We compare the
+    // case-folded source-level word.
     const verifyTocFirstEntry = () => {
       const firstTopLevel = document.querySelector(
         "#toc-sidebar > nav > ul > li:first-child > a, #toc-sidebar > ul > li:first-child > a, .toc-list > li:first-child > a",
       );
       if (!firstTopLevel) return;
       const text = firstTopLevel.textContent.trim();
-      if (text !== "EXPERIENCE") {
+      const expected = "Experience";
+      if (text.toUpperCase() !== expected.toUpperCase()) {
         // eslint-disable-next-line no-console
         console.error(
-          `[cv-toc] regression: first TOC entry expected "EXPERIENCE", got "${text}". ` +
+          `[cv-toc] regression: first TOC entry expected "${expected}" (case-insensitive), got "${text}". ` +
             "h3 likely promoted to top level — see _pages/cv.md TOC sync logic.",
         );
       }
 
       // Round-5 regression guard for OSP h3 spans wrapped in <a> (round-4
       // selector fix). In EN state OSP child #2 must contain "Core
-      // Contributor"; in ZH state it must contain "核心贡献者". If anyone
-      // re-tightens the data-lang lookup to `:scope >`, this fires.
+      // Contributor"; in ZH state it must contain "核心贡献者". Missing
+      // structure (top-level OSP item, OSP children list, child #2) is
+      // a hard failure — the guard's job is to catch silent breakage,
+      // and a `:scope >` re-tightening / OSP h3 restructure / OSP order
+      // shuffle would otherwise let the assertion no-op silently.
       const topItems = document.querySelectorAll(
         "#toc-sidebar > nav > ul > li, #toc-sidebar > ul > li, .toc-list > li",
       );
       const ospItem = Array.from(topItems).find((li) =>
         /open source projects/i.test(li.querySelector(":scope > a")?.textContent || ""),
       );
-      const ospHermesLink = ospItem?.querySelectorAll(":scope > ul > li > a")[1];
-      if (ospHermesLink) {
-        const ospText = ospHermesLink.textContent.trim();
-        const isEnglish = cvRoot.classList.contains("is-english");
-        const expected = isEnglish ? "Core Contributor" : "核心贡献者";
-        if (!ospText.includes(expected)) {
-          // eslint-disable-next-line no-console
-          console.error(
-            `[cv-toc] regression: OSP hermes-agent entry (${isEnglish ? "EN" : "ZH"} state) expected to include "${expected}", got "${ospText}". ` +
-              "Likely the data-lang span selector was re-tightened to :scope > and is missing <a>-wrapped spans.",
-          );
-        }
+      if (!ospItem) {
+        // eslint-disable-next-line no-console
+        console.error(
+          "[cv-toc] regression: OSP top-level TOC item not found. " +
+            "Likely the section was renamed, removed, or moved out of the top-level set.",
+        );
+        return;
+      }
+      const ospHermesLink = ospItem.querySelectorAll(":scope > ul > li > a")[1];
+      if (!ospHermesLink) {
+        // eslint-disable-next-line no-console
+        console.error(
+          "[cv-toc] regression: OSP child #2 (hermes-agent) not found. " +
+            "Likely the OSP h3 structure changed, the project order was shuffled, or tocbot stopped capturing OSP children.",
+        );
+        return;
+      }
+      const ospText = ospHermesLink.textContent.trim();
+      const isEnglish = cvRoot.classList.contains("is-english");
+      const expectedOsp = isEnglish ? "Core Contributor" : "核心贡献者";
+      if (!ospText.includes(expectedOsp)) {
+        // eslint-disable-next-line no-console
+        console.error(
+          `[cv-toc] regression: OSP hermes-agent entry (${isEnglish ? "EN" : "ZH"} state) expected to include "${expectedOsp}", got "${ospText}". ` +
+            "Likely the data-lang span selector was re-tightened to :scope > and is missing <a>-wrapped spans.",
+        );
       }
     };
 
