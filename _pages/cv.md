@@ -207,12 +207,10 @@ PR #7.
     <h2 class="cv-section-title">Skills</h2>
     <div class="cv-skills">
       {% for skill in sections.Skills %}
-        {% assign zh_skill = cv_zh.skills[forloop.index0] %}
         <div class="cv-skill-group">
           <h3 class="cv-skill-name">
             {% if skill.icon %}<i class="{{ skill.icon }}" aria-hidden="true"></i>{% endif %}
-            <span data-lang="zh">{{ zh_skill.name | default: skill.name }}</span>
-            <span data-lang="en">{{ skill.name }}</span>
+            <span>{{ skill.name }}</span>
           </h3>
           <ul class="cv-skill-keywords">
             {% for kw in skill.keywords %}
