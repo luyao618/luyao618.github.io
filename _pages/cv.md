@@ -345,6 +345,15 @@ PR #7.
     // "Experience" / "Skills" / "Awards" — English-by-design per project
     // policy) is recorded with both zh and en equal to whatever tocbot
     // already wrote. That keeps the entry static across toggles.
+    //
+    // Span lookup uses a plain descendant selector (NOT `:scope >`).
+    // OSP h3.cv-project-name wraps its zh/en spans inside an <a> for the
+    // GitHub link, so a child-only `:scope > [data-lang="..."]` would
+    // miss them and fall back to the static tocbot snapshot — the
+    // round-4 OSP "Core Contributor / Contributor" regression. A
+    // descendant query handles <a>, future <strong>/<em>, etc. without
+    // enumerating wrapper tags. Safe because each heading contains at
+    // most one paired zh+en data-lang pair and no nested headings.
     let tocCache = null;
     const collectHeadings = () =>
       Array.from(cvRoot.querySelectorAll("h2.cv-section-title, h3.cv-role-title, h3.cv-project-name, h3.cv-skill-name, h3.cv-award-title, h3.cv-edu-school"));
@@ -354,8 +363,8 @@ PR #7.
       const headings = collectHeadings();
       tocCache = Array.from(links).map((link, idx) => {
         const heading = headings[idx];
-        const zhSpan = heading?.querySelector(':scope > [data-lang="zh"]');
-        const enSpan = heading?.querySelector(':scope > [data-lang="en"]');
+        const zhSpan = heading?.querySelector('[data-lang="zh"]');
+        const enSpan = heading?.querySelector('[data-lang="en"]');
         const tocText = link.textContent.trim();
         return {
           link,
