@@ -92,6 +92,9 @@
 {% if page.permalink == '/' %}
   <link rel="stylesheet" href="{{ '/assets/css/about-resume.css' | relative_url | bust_file_cache }}">
 {% endif %}
+{% if page.permalink == '/cv/' %}
+  <link rel="stylesheet" href="{{ '/assets/css/cv-resume.css' | relative_url | bust_file_cache }}">
+{% endif %}
 <link rel="stylesheet" href="{{ '/assets/css/site-theme.css' | relative_url | bust_file_cache }}">
 <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
 

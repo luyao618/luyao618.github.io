@@ -113,13 +113,13 @@
             </li>
           {% endif %}
 
-          {% if page.permalink == '/' %}
+          {% if page.permalink == '/' or page.permalink == '/cv/' %}
             <li class="nav-item resume-language-switch">
               <button
                 class="resume-language-toggle"
                 type="button"
                 aria-pressed="false"
-                aria-label="Switch about page language"
+                aria-label="Switch page language"
                 title="Switch to English"
               >
                 <i class="fa-solid fa-language" aria-hidden="true"></i>
