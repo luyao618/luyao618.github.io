@@ -22,6 +22,13 @@ Chinese strings live in cv_zh.yml so RenderCV's strict schema for cv.yml
 is not affected; the canonical English source still drives the PDF render.
 Section titles (the keys of cv.sections) intentionally stay in English
 per project decision; only body content is bilingual.
+
+The Selected Impact sections are unrolled (rather than driven by a Liquid
+loop over a string-split array) because Jekyll's strict-Liquid setting
+resolved the dynamic key lookup `cv_zh[zh_key]` to nil under some
+conditions, silently triggering the `| default: entry.bullet` fallback
+on every bullet — which is what caused the all-English regression on
+PR #7.
 {% endcomment %}
 
 <main class="cv-resume" aria-label="CV of Yao Lu">
@@ -112,27 +119,57 @@ per project decision; only body content is bilingual.
     </ol>
   </section>
 
-{% assign impact_keys = "Selected Impact · Copilot Mac & Connectivity Quality|selected_impact_copilot_mac|Selected Impact · Growth Analytics & Paid Ads|selected_impact_growth|Selected Impact · Data Platform / Warehouse / Observability|selected_impact_data_platform|Selected Impact · User Profile & Recommendation / Data Science|selected_impact_user_profile" | split: "|" %}
-{% for i in (0..3) %}
-{% assign si_pos = i | times: 2 %}
-{% assign en_key = impact_keys[si_pos] %}
-{% assign zh_key = impact_keys[si_pos | plus: 1] %}
-{% assign en_bullets = sections[en_key] %}
-{% assign zh_bullets = cv_zh[zh_key] %}
+  <section class="cv-section">
+    <h2 class="cv-section-title">Selected Impact · Copilot Mac &amp; Connectivity Quality</h2>
+    <ul class="cv-bullets">
+      {% for entry in sections["Selected Impact · Copilot Mac & Connectivity Quality"] %}
+        {% assign zh_entry = cv_zh.selected_impact_copilot_mac[forloop.index0] %}
+        <li>
+          <div data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | markdownify }}</div>
+          <div data-lang="en">{{ entry.bullet | markdownify }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
 
-<section class="cv-section">
-<h2 class="cv-section-title">{{ en_key }}</h2>
-<ul class="cv-bullets">
-{% for entry in en_bullets %}
-{% assign zh_entry = zh_bullets[forloop.index0] %}
-<li>
-<div data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | markdownify }}</div>
-<div data-lang="en">{{ entry.bullet | markdownify }}</div>
-</li>
-{% endfor %}
-</ul>
-</section>
-{% endfor %}
+  <section class="cv-section">
+    <h2 class="cv-section-title">Selected Impact · Growth Analytics &amp; Paid Ads</h2>
+    <ul class="cv-bullets">
+      {% for entry in sections["Selected Impact · Growth Analytics & Paid Ads"] %}
+        {% assign zh_entry = cv_zh.selected_impact_growth[forloop.index0] %}
+        <li>
+          <div data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | markdownify }}</div>
+          <div data-lang="en">{{ entry.bullet | markdownify }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="cv-section">
+    <h2 class="cv-section-title">Selected Impact · Data Platform / Warehouse / Observability</h2>
+    <ul class="cv-bullets">
+      {% for entry in sections["Selected Impact · Data Platform / Warehouse / Observability"] %}
+        {% assign zh_entry = cv_zh.selected_impact_data_platform[forloop.index0] %}
+        <li>
+          <div data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | markdownify }}</div>
+          <div data-lang="en">{{ entry.bullet | markdownify }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="cv-section">
+    <h2 class="cv-section-title">Selected Impact · User Profile &amp; Recommendation / Data Science</h2>
+    <ul class="cv-bullets">
+      {% for entry in sections["Selected Impact · User Profile & Recommendation / Data Science"] %}
+        {% assign zh_entry = cv_zh.selected_impact_user_profile[forloop.index0] %}
+        <li>
+          <div data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | markdownify }}</div>
+          <div data-lang="en">{{ entry.bullet | markdownify }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
 
   <section class="cv-section">
     <h2 class="cv-section-title">AI Agent &amp; AI-Native Engineering</h2>
@@ -170,12 +207,10 @@ per project decision; only body content is bilingual.
     <h2 class="cv-section-title">Skills</h2>
     <div class="cv-skills">
       {% for skill in sections.Skills %}
-        {% assign zh_skill = cv_zh.skills[forloop.index0] %}
         <div class="cv-skill-group">
           <h3 class="cv-skill-name">
             {% if skill.icon %}<i class="{{ skill.icon }}" aria-hidden="true"></i>{% endif %}
-            <span data-lang="zh">{{ zh_skill.name | default: skill.name }}</span>
-            <span data-lang="en">{{ skill.name }}</span>
+            <span>{{ skill.name }}</span>
           </h3>
           <ul class="cv-skill-keywords">
             {% for kw in skill.keywords %}
@@ -215,8 +250,8 @@ per project decision; only body content is bilingual.
             <span data-lang="en">{{ award.awarder }}</span>
             <span class="cv-award-date">· {{ award.date }}</span>
           </p>
-          <p class="cv-award-summary" data-lang="zh">{{ zh_award.summary | default: award.summary }}</p>
-          <p class="cv-award-summary" data-lang="en">{{ award.summary }}</p>
+          <div class="cv-award-summary" data-lang="zh">{{ zh_award.summary | default: award.summary | markdownify }}</div>
+          <div class="cv-award-summary" data-lang="en">{{ award.summary | markdownify }}</div>
         </li>
       {% endfor %}
     </ul>
@@ -291,6 +326,38 @@ per project decision; only body content is bilingual.
       }
     };
 
+    // The sidebar TOC is generated by tocbot from the page's h3 headings.
+    // Each h3 in this page contains both a zh and an en data-lang span, so
+    // tocbot pulls the concatenated textContent and the TOC entries do not
+    // follow the language toggle. Sync them manually:
+    //   1. Cache each TOC link's heading id and pull its zh / en text once.
+    //   2. On every setLanguage call, swap in the active-language text.
+    let tocCache = null;
+    const buildTocCache = () => {
+      const links = document.querySelectorAll("#toc-sidebar a[href^='#']");
+      tocCache = Array.from(links).map((link) => {
+        const id = link.getAttribute("href").slice(1);
+        const heading = id ? document.getElementById(id) : null;
+        const zhSpan = heading?.querySelector('[data-lang="zh"]');
+        const enSpan = heading?.querySelector('[data-lang="en"]');
+        return {
+          link,
+          zh: zhSpan ? zhSpan.textContent.trim() : link.textContent.trim(),
+          en: enSpan ? enSpan.textContent.trim() : link.textContent.trim(),
+        };
+      });
+      return tocCache;
+    };
+
+    const applyLanguageToToc = (language) => {
+      // tocbot may run after our first setLanguage call; rebuild lazily.
+      const cache = tocCache && tocCache.length > 0 ? tocCache : buildTocCache();
+      const key = language === "en" ? "en" : "zh";
+      cache.forEach(({ link, zh, en }) => {
+        link.textContent = key === "en" ? en : zh;
+      });
+    };
+
     const setLanguage = (language) => {
       const isEnglish = language === "en";
       cvRoot.classList.toggle("is-english", isEnglish);
@@ -304,12 +371,29 @@ per project decision; only body content is bilingual.
         label.textContent = isEnglish ? "中" : "EN";
       }
 
+      applyLanguageToToc(language);
       storeLanguage(language);
     };
 
-    setLanguage(readStoredLanguage() === "en" ? "en" : "zh");
+    const initialLanguage = readStoredLanguage() === "en" ? "en" : "zh";
+    setLanguage(initialLanguage);
     languageToggle?.addEventListener("click", () => {
       setLanguage(cvRoot.classList.contains("is-english") ? "zh" : "en");
     });
+
+    // tocbot binds on DOMContentLoaded and writes link text after we
+    // first set the language, so re-apply once it's done. Use a short
+    // window of polls to find the populated TOC, then re-sync.
+    const tocReadyDeadline = Date.now() + 4000;
+    const tocReadyPoll = setInterval(() => {
+      const links = document.querySelectorAll("#toc-sidebar a[href^='#']");
+      if (links.length > 0) {
+        clearInterval(tocReadyPoll);
+        tocCache = null; // force rebuild against the populated TOC
+        applyLanguageToToc(cvRoot.classList.contains("is-english") ? "en" : "zh");
+      } else if (Date.now() > tocReadyDeadline) {
+        clearInterval(tocReadyPoll);
+      }
+    }, 120);
   })();
 </script>
