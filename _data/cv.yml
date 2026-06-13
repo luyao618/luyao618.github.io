@@ -1,26 +1,374 @@
 cv:
-  name: Yao
-  label: Software Engineer
-  email: ""
-  location: ""
-  image: ""
-  summary: Personal technical site for AI agent engineering, product systems, and software craft.
+  name: Yao Lu (鹿尧)
+  label: Senior Software Engineer · AI-Native Data & Product Systems · Agent Engineering
+  email: 364939526@qq.com
+  phone: "+86 136 9977 4962"
+  location: Suzhou, China
+  website: https://luyao618.github.io
+  image: /assets/img/profile-lu-yao.jpeg
+  summary: >-
+    Senior software engineer with a decade in data engineering, analytics, and
+    product systems. Now AI-native — building agents, KG-RAG systems, telemetry
+    pipelines, and cross-surface quality frameworks at Microsoft Copilot Mac.
+    1st Prize, FY25 AI School China (solo). Active open-source contributor
+    with 1.5K+ GitHub stars and 189+ external PRs.
 
   social_networks:
     - network: GitHub
       username: luyao618
+    - network: Zhihu
+      username: LuisHome
 
   sections:
-    Experience: []
-    Education: []
-    Projects: []
+    # ----------------------------------------------------------------
+    # Section 2 — Career Timeline (rendered as "Experience" by the gem,
+    # which always appears right after Contact + Summary).
+    # ----------------------------------------------------------------
+    Experience:
+      - position: Senior Software Engineer
+        company: Microsoft (STCA WebXT · Copilot Mac · Surfaces Connectivity)
+        location: Suzhou, China
+        start_date: "2022-04"
+        end_date: ""
+        summary: >-
+          Data, telemetry, experimentation, and AI-agent engineering for
+          Copilot Mac and cross-surface (Mac / iOS / Android / Web / CMC)
+          connectivity quality. AI-native transformation lead for the squad.
+      - position: Senior Software Engineer
+        company: Xiaomi (Big Data · User Profile · MiPush)
+        location: Beijing & Nanjing, China
+        start_date: "2019-04"
+        end_date: "2022-03"
+        summary: >-
+          User-profile labels for Mi device swap, real-time push statistics
+          (PB-scale), MiPush competitor analytics, and DMP feature data.
+      - position: Big Data Engineer
+        company: Meitu (Risk Control)
+        location: Xiamen, China
+        start_date: "2018-04"
+        end_date: "2019-03"
+        summary: >-
+          Real-time anti-abuse rule engine and a time-series anomaly-detection
+          alerting platform over hundreds of millions of metrics.
+      - position: Big Data Engineer
+        company: Skyworth Coocaa (Data Platform)
+        location: Shenzhen, China
+        start_date: "2016-07"
+        end_date: "2018-03"
+        summary: >-
+          Built the data platform from scratch — DMP audience selection, BI
+          ETL, Spark UDFs, and real-time live-stream parsing for smart TVs.
+
+    # ----------------------------------------------------------------
+    # Section 3 — Selected Impact (4 buckets, NOT per-company)
+    # ----------------------------------------------------------------
+    "Selected Impact · Copilot Mac & Connectivity Quality":
+      - bullet: >-
+          **Copilot Mac retention (Top 1 across all surfaces):** new-user
+          retention **24.0% → 31.7%**, returning-user retention
+          **59.9% → 73.1%**, after standing up the team's ICM framework,
+          quality dashboards, and weekly LT/PM review cadence.
+      - bullet: >-
+          **Voice Thumb-Down Rate 46.3% → 31.93%** (from second worst to
+          best across all clients) via stage-level voice telemetry, Voice
+          Quality Dashboard, and a Mac Voice Funnel.
+      - bullet: >-
+          **Telemetry backfill + native rewrite during Mac migration** —
+          contributed to **WAU 34.1K → 105K** and later **150K (Feb 2026,
+          C1 OKR met)**; authored the canonical *Copilot Mac Telemetry
+          Guidance*.
+      - bullet: >-
+          **Cross-Surface Connectivity baseline** — first Mobile-aligned Mac
+          chat-funnel KQL, Grafana dashboard, and Geneva ICM monitor at iOS
+          thresholds. **Mac no-response baseline = 0.8% (99.7% with retry)**;
+          quantified Picasso-deploy ↔ Mac actionable-rate at **−1.3% abs**.
+      - bullet: >-
+          **CMC 1DS background-tab RCA** — proved **32–46% of CMC
+          "incomplete-after-backgrounding" messages were 1DS terminal-event
+          drops**, not real failures. Proposed `visibilitychange → hidden`
+          flush + `sendBeacon` fix; AB readouts: `chat-resend-fix` Web
+          **−25.3% rel**, `flush-log-on-vis` no-content **−34.9%**, App
+          Exit **−11.9%**.
+      - bullet: >-
+          **Sev2 P1 incident response** — drove the cross-Mac empty-scorecard
+          hot-fix end-to-end in **~5 days** (root cause: Picasso
+          `x-ceto-ref → x-trace-id`), restoring scorecards across all Mac
+          experiments and unblocking Connector-on-Mac and other October-moment
+          GAs.
+      - bullet: >-
+          **14 telemetry PRs** shipped across `mac`, `app-ios`, and
+          `data-schema` repos (flagship: `mac#1790` Mobile-parity,
+          `mac#2651` Onboarding picassoId queue + backfill, `mac#3278`
+          resend, `data-schema#659`).
+
+    "Selected Impact · Growth Analytics & Paid Ads":
+      - bullet: >-
+          **Drove Paid Ads ROI improvements** through LTV modeling, attribution
+          pipeline ownership, and acquisition analytics — explicitly recognized
+          by management in FY25 performance summary.
+      - bullet: >-
+          **Fixed install-channel attribution affecting ~20K users** across
+          Adjust / install channels / telemetry, improving accuracy of
+          campaign ROI and LTV reporting.
+      - bullet: >-
+          **Skype Call 1-to-1 success rate 88% → 98%** and **call-quality
+          complaints 30% → 15%** as Call Quality data owner; built and
+          optimized the Call Quality Funnel.
+      - bullet: >-
+          **MiPush · Sales Enablement** — designed the purchase-intent
+          scoring model and intent-brand label that powered Mi Mall's smart
+          marketing for handset sales and inventory clearance.
+
+    "Selected Impact · Data Platform / Warehouse / Observability":
+      - bullet: >-
+          **Real-time push statistics rewrite** — Flink + Spark Streaming →
+          HBase pipeline at **PB scale**, **99% service availability**,
+          aggregating tens of millions of events per minute.
+      - bullet: >-
+          **Storage cost reduction ~RMB 300K/month** by restructuring MiPush
+          statistics warehouse and scheduling.
+      - bullet: >-
+          **Android handset competitor analytics** — covering **90%+ of
+          China's Android device base**; reduced statistical error vs. BCI
+          from **>50% to 10%** within one month of takeover; integrated
+          Kylin + Redash for self-serve OLAP.
+      - bullet: >-
+          **Anomaly-detection alerting platform** at Meitu — ingested
+          **hundreds of millions of metrics**, ran Prophet / SVMM time-series
+          detection at **98%+ precision**, with Livy-based Spark service
+          interface.
+      - bullet: >-
+          **Mac quality data operations** — ~60 daily/weekly OCV reports
+          across 4 rolling canvases as the squad's de-facto signal source;
+          Mac App Rating Worldwide **4.73 → 4.74**.
+
+    "Selected Impact · User Profile & Recommendation / Data Science":
+      - bullet: >-
+          **Xiaomi device-swap label** — defined the official Mi device-swap
+          taxonomy, solved multi-SIM / multi-device cases via a multi-signal
+          scoring model. **Accuracy 90%+, monthly active coverage 80%**;
+          adopted by the corporate strategy office as the brand-loyalty
+          standard.
+      - bullet: >-
+          **MiPush sales-enablement DMP labels** — built the intent-mining
+          warehouse (30+ tables), purchase-intent logistic-regression model,
+          and DMP feature tables jointly with the algorithm team.
+      - bullet: >-
+          **Skyworth Coocaa DMP** — audience selection over user-label tags,
+          HyperLogLog cardinality estimation for fast audience sizing, and
+          Spark UDAFs that **cut new-label jobs by 1 hour**.
+      - bullet: >-
+          **Bing / SuperApp MiniApp data ownership** — Reward, Wallpaper,
+          and Weather MiniApp growth dashboards; "Start" app MiniApp domain
+          data owner.
+
+    # ----------------------------------------------------------------
+    # Section 4 — AI Agent & AI-Native Engineering
+    # ----------------------------------------------------------------
+    "AI Agent & AI-Native Engineering":
+      - bullet: >-
+          🏆 **1st Prize · FY25 AI School China (Microsoft, Feb 2026)** —
+          one of only **3 groups / 8 students** across the entire Microsoft
+          China AI training program. **Submitted solo** in the AI Agents
+          track.
+      - bullet: >-
+          **Project: Copilot Mac Data Agent (powered by KG-RAG)** — an LLM
+          agent that lifts Kusto query efficiency for the Copilot Mac team
+          against raw telemetry with no data warehouse. Stack: **OpenAI
+          Agent SDK + MCP-style tool calling + Neo4j knowledge graph + Kusto
+          connector + Azure Container Registry**. Tackled hallucination
+          control, Kusto cluster permissions, and messy raw telemetry.
+      - bullet: >-
+          **AI-native transformation at the squad level** — daily personal
+          token consumption scaled from **<1M (8 mo ago) → ~100M (Apr 2026),
+          ~100× growth**; **100% of data work is AI-automated**
+          (KQL/SQL, dashboards, OCV reports, AB readouts).
+      - bullet: >-
+          **AI-aided RCA & code reading** — used LLM-assisted multi-pass
+          source reading to traverse Chromium 1DS SDK and Picasso source,
+          which directly unblocked the CMC bot filter and 1DS terminal-event
+          drop RCA.
+      - bullet: >-
+          **Internal Tech Sharing — "Copilot Mac Data Agent powered by
+          KG-RAG"**: architecture walk-through, real engineering challenges,
+          and a working prototype demo. Authored the canonical *Mac-on-
+          Chromium 3-Track Telemetry Architecture* canvas.
+
+    # ----------------------------------------------------------------
+    # Section 5 — Open Source / Public Engineering
+    # (rendered with the "Projects" / "Open Source Projects" template
+    # so each entry gets a clickable URL + summary + highlights.)
+    # ----------------------------------------------------------------
+    "Open Source Projects":
+      - name: "Claude-Code-Source-Study  ⭐ 1.5k+ / 🍴 530+"
+        url: https://github.com/luyao618/Claude-Code-Source-Study
+        summary: >-
+          Sole maintainer of a deep-dive source-code study of Anthropic's
+          Claude Code — the leading reference of its kind in the Chinese AI
+          engineering community.
+      - name: "NousResearch/hermes-agent  (⭐ 187k) — Core Contributor"
+        url: https://github.com/NousResearch/hermes-agent/commits/main/?author=luyao618
+        summary: >-
+          **15 commits merged to `main`** on a fast-growing AI agent
+          framework, spanning ACP protocol, agent runtime, config, tools,
+          and Discord / Telegram / Desktop / Gateway channels.
+      - name: "openclaw/openclaw  (⭐ 378k) — Contributor"
+        url: https://github.com/openclaw/openclaw/commits/main/?author=luyao618
+        summary: >-
+          **8 commits merged to `main`** on one of the most-starred AI
+          assistants on GitHub, covering messaging adapters
+          (Matrix / GoogleChat), agent dispatch, and the transport layer.
+      - name: "Self-built AI-native developer tools"
+        url: https://github.com/luyao618
+        summary: >-
+          Ecosystem of small AI-native tools — **skila** (AI agent skill
+          lifecycle controller), **voice-buddy** (voice for Claude Code),
+          **code-while-shit** (remote-driven AI coding), **Claude-Code-
+          Data-Studios** (data-scientist personality for Claude Code),
+          **dashboard-gen-skill**, and others.
+      - name: "GitHub activity"
+        url: https://github.com/luyao618
+        summary: >-
+          **621 PRs / 189 external-contribution PRs** in the past months;
+          GitHub `luyao618` · 27 public repos · 16 original repos
+          aggregating **1,613 stars / 556 forks**.
+
+    # ----------------------------------------------------------------
+    # Section 6 — Technical Skills (by capability domain, not "level")
+    # ----------------------------------------------------------------
     Skills:
-      - name: AI Agent Engineering
-        level: ""
-        icon: fa-solid fa-hashtag
-        keywords: "Agent harness, memory systems, tool routing, product workflows"
-    Languages: []
-    Interests:
-      - name: Software Engineering
-        icon: fa-solid fa-tag
-        keywords: "AI Agent, developer tools, product engineering"
+      - name: AI / Agents
+        icon: fa-solid fa-robot
+        keywords:
+          - LLM agent architectures
+          - OpenAI Agent SDK
+          - MCP (Model Context Protocol)
+          - KG-RAG / Knowledge Graph + RAG
+          - Neo4j
+          - Claude Code internals
+          - Agentic workflows
+          - Prompt engineering & token economics
+      - name: Data Engineering
+        icon: fa-solid fa-database
+        keywords:
+          - Spark (batch & streaming)
+          - Flink
+          - Kafka
+          - HBase
+          - Hive / HDFS
+          - Kylin / Doris
+          - Kusto (KQL)
+          - PB-scale pipelines
+      - name: Analytics & Experimentation
+        icon: fa-solid fa-chart-line
+        keywords:
+          - A/B testing & scorecards
+          - Funnel analysis (call / voice / chat)
+          - LTV modeling
+          - Attribution
+          - OCV / user feedback analytics
+          - Power BI · Grafana · Redash
+      - name: Observability & Telemetry
+        icon: fa-solid fa-satellite-dish
+        keywords:
+          - OneCollector / 1DS pipelines
+          - Geneva / ICM
+          - Cross-platform telemetry schema design
+          - Event instrumentation & validation
+          - SLO / quality dashboards
+      - name: Backend / Full-stack
+        icon: fa-solid fa-layer-group
+        keywords:
+          - Python
+          - TypeScript / Node.js
+          - Shell
+          - Docker / Azure Container Registry
+          - Web / CLI tooling
+          - REST / async services
+      - name: Languages & Tools
+        icon: fa-solid fa-screwdriver-wrench
+        keywords:
+          - Git
+          - Markdown
+          - Maven
+          - PySpark
+          - SQL
+          - Liquid / Jekyll
+          - Godot (GDScript, for hobby work)
+
+    # ----------------------------------------------------------------
+    # Section 7 — Writing / Talks / Knowledge Sharing
+    # ----------------------------------------------------------------
+    "Writing / Talks / Knowledge Sharing":
+      - bullet: >-
+          **Claude-Code-Source-Study** — open-source long-form source-code
+          study series (⭐ 1.5k+); the most-starred Chinese-community
+          reference on Claude Code internals.
+      - bullet: >-
+          **Internal Tech Sharing — "Copilot Mac Data Agent powered by
+          KG-RAG"** — architecture, engineering challenges, and live demo to
+          the Copilot Mac team.
+      - bullet: >-
+          **Copilot Mac Telemetry Guidance** — canonical internal doc
+          adopted by partner engineers (Wicresoft, internal squads) as the
+          team's telemetry standard.
+      - bullet: >-
+          **Mac-on-Chromium 3-Track Telemetry Architecture** canvas; rolling
+          Daily Check History / OCV / App-rating canvases as the squad's
+          weekly signal cadence.
+      - bullet: >-
+          **Cross-functional playbooks** — Mac Connectivity Unresponsive
+          Analytics, C1 baseline / C1-sustain canvases, per-user ±100-event
+          Kusto template (now reused squad-wide).
+      - bullet: >-
+          **Zhihu (zhihu.com/people/LuisHome)** — long-form writing on AI
+          agents, data systems, and engineering practice.
+
+    # ----------------------------------------------------------------
+    # Section 8 — Awards / Recognition
+    # ----------------------------------------------------------------
+    Awards:
+      - title: 1st Prize · FY25 AI School China
+        awarder: Microsoft
+        date: "2026-02"
+        summary: >-
+          Top 8 students across the entire Microsoft China AI training
+          program. **Submitted solo** in the AI Agents track with *Copilot
+          Mac Data Agent (KG-RAG)*. Selected from the top 9 finalist
+          projects across 4 tracks (AI Agents / RAG / Fine-tuning /
+          Multimodal).
+      - title: Manager Recognition — "Driving Paid Ads ROI improvements"
+        awarder: Microsoft · FY25 Performance Summary
+        date: "2025"
+        summary: >-
+          Explicitly called out in FY25 management commentary alongside
+          "building foundational systems for Copilot Mac."
+      - title: Cross-team thanks — Empty-Scorecard P1 hot-fix
+        awarder: Microsoft Copilot Mac LT
+        date: "2026-02"
+        summary: >-
+          Thanked by Dave Lakshmanan and Max He for driving the empty-
+          scorecard P1 hot-fix end-to-end in ~5 days and unblocking the
+          October-moment GAs.
+
+    # ----------------------------------------------------------------
+    # Section 9 — Education
+    # ----------------------------------------------------------------
+    Education:
+      - institution: Hunan University (985)
+        area: Information and Computing Science
+        studyType: B.S.
+        location: Changsha, China
+        start_date: "2012-09"
+        end_date: "2016-06"
+
+    # ----------------------------------------------------------------
+    # Section 10 — Languages (Interests intentionally omitted)
+    # ----------------------------------------------------------------
+    Languages:
+      - name: Chinese
+        summary: Native
+        icon: fa-solid fa-language
+      - name: English
+        summary: Professional working proficiency (technical reading & writing daily)
+        icon: fa-solid fa-language

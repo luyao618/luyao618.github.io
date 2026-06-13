@@ -6,7 +6,7 @@ nav: true
 nav_order: 4
 cv_pdf: # you can also use external links here
 cv_format: rendercv # options: rendercv, jsonresume
-description: CV and resume details. This page will be expanded with real profile data.
+description: Senior Software Engineer — AI-native data & product systems, agent engineering. Microsoft Copilot Mac · ex-Xiaomi · Hunan University.
 toc:
   sidebar: left
 ---
