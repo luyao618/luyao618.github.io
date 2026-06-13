@@ -1,0 +1,362 @@
+/* Bilingual CV page styles. Mirrors the about-page resume aesthetic
+   (see about-resume.css) so the two pages share a coherent look without
+   reaching into the al_folio_cv plugin's own layout/CSS. */
+
+.cv-resume {
+  --cv-ink: #1f2426;
+  --cv-muted: #69726f;
+  --cv-soft: #f7f5ef;
+  --cv-line: #dedbd1;
+  --cv-accent: #1f5d58;
+  --cv-accent-soft: #e8efea;
+  --cv-warm: #1f5d58;
+  color: var(--cv-ink);
+  padding: 0 0 clamp(3rem, 7vw, 5.5rem);
+}
+
+.cv-resume [data-lang="en"],
+.cv-resume.is-english [data-lang="zh"] {
+  display: none;
+}
+
+.cv-resume.is-english [data-lang="en"] {
+  display: revert;
+}
+
+html[data-theme="dark"] .cv-resume,
+body.dark .cv-resume {
+  --cv-ink: #edf1f0;
+  --cv-muted: #aab5b1;
+  --cv-soft: #171a1a;
+  --cv-line: #2a302f;
+  --cv-accent: #82b8ae;
+  --cv-accent-soft: #1f302e;
+  --cv-warm: #82b8ae;
+}
+
+.cv-hero {
+  padding: 2.35rem 0 clamp(2.25rem, 5vw, 3.5rem);
+  border-bottom: 1px solid var(--cv-line);
+}
+
+.cv-kicker {
+  margin: 0 0 0.85rem;
+  color: var(--cv-warm);
+  font-size: 0.85rem;
+  font-weight: 760;
+  letter-spacing: 0.02em;
+}
+
+.cv-title {
+  margin: 0;
+  color: var(--cv-ink);
+  font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+  font-weight: 720;
+  line-height: 1.04;
+}
+
+.cv-subtitle {
+  margin: 1rem 0 0;
+  max-width: 760px;
+  color: var(--cv-muted);
+  font-size: 1.05rem;
+  line-height: 1.62;
+}
+
+.cv-summary {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 720px;
+  margin: 1.45rem 0 0;
+  padding-left: 1.05rem;
+  border-left: 2px solid var(--cv-warm);
+}
+
+.cv-summary p {
+  margin: 0;
+  color: var(--cv-ink);
+  font-size: 0.97rem;
+  line-height: 1.78;
+}
+
+.cv-contact-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  color: var(--cv-muted);
+  font-size: 0.9rem;
+}
+
+.cv-contact-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.cv-contact-list i,
+.cv-contact-list .cv-zhihu-mark {
+  color: var(--cv-accent);
+  font-size: 0.95rem;
+}
+
+.cv-contact-list .cv-zhihu-mark {
+  font-weight: 820;
+  font-size: 0.78rem;
+}
+
+.cv-contact-list a {
+  color: var(--cv-ink);
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+}
+
+.cv-contact-list a:hover {
+  color: var(--cv-accent);
+  border-bottom-color: var(--cv-accent);
+}
+
+.cv-section {
+  padding: clamp(1.6rem, 3.5vw, 2.4rem) 0 0;
+}
+
+.cv-section + .cv-section {
+  border-top: 1px solid color-mix(in srgb, var(--cv-line) 70%, transparent);
+}
+
+.cv-section-title {
+  margin: 0 0 1.1rem;
+  color: var(--cv-warm);
+  font-size: 0.78rem;
+  font-weight: 760;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Experience timeline ---------------------------------------------------- */
+.cv-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.4rem;
+}
+
+.cv-timeline-item {
+  padding-left: 1rem;
+  border-left: 2px solid color-mix(in srgb, var(--cv-line) 80%, transparent);
+}
+
+.cv-role-head {
+  display: grid;
+  gap: 0.25rem;
+  margin-bottom: 0.55rem;
+}
+
+.cv-role-title {
+  margin: 0;
+  color: var(--cv-ink);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.cv-role-meta {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.85rem;
+  color: var(--cv-muted);
+  font-size: 0.86rem;
+}
+
+.cv-role-company {
+  color: color-mix(in srgb, var(--cv-ink) 78%, var(--cv-muted));
+  font-weight: 620;
+}
+
+.cv-role-summary {
+  margin: 0;
+  color: var(--cv-ink);
+  font-size: 0.93rem;
+  line-height: 1.72;
+}
+
+/* Bullet sections (impact / AI agents / writing) ------------------------- */
+.cv-bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.cv-bullets > li {
+  position: relative;
+  padding-left: 1.1rem;
+  color: var(--cv-ink);
+  font-size: 0.93rem;
+  line-height: 1.72;
+}
+
+.cv-bullets > li::before {
+  content: "";
+  position: absolute;
+  top: 0.65rem;
+  left: 0;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: var(--cv-accent);
+}
+
+.cv-bullets p {
+  margin: 0;
+}
+
+/* Open-source projects --------------------------------------------------- */
+.cv-projects {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.cv-project-name {
+  margin: 0 0 0.25rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.cv-project-name a {
+  color: var(--cv-ink);
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+}
+
+.cv-project-name a:hover {
+  color: var(--cv-accent);
+  border-bottom-color: var(--cv-accent);
+}
+
+.cv-project-summary {
+  color: var(--cv-ink);
+  font-size: 0.92rem;
+  line-height: 1.72;
+}
+
+.cv-project-summary p {
+  margin: 0;
+}
+
+/* Skills grid ------------------------------------------------------------ */
+.cv-skills {
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.cv-skill-group {
+  border: 1px solid color-mix(in srgb, var(--cv-line) 80%, transparent);
+  border-radius: 6px;
+  padding: 0.85rem 1rem 0.95rem;
+  background: color-mix(in srgb, var(--cv-soft) 60%, transparent);
+}
+
+.cv-skill-name {
+  margin: 0 0 0.55rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--cv-warm);
+  font-size: 0.92rem;
+  font-weight: 720;
+}
+
+.cv-skill-keywords {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.cv-skill-keywords li {
+  padding: 0.18rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--cv-line) 86%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cv-muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+/* Awards & education ----------------------------------------------------- */
+.cv-awards,
+.cv-education,
+.cv-languages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.95rem;
+}
+
+.cv-award-title,
+.cv-edu-school {
+  margin: 0 0 0.18rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--cv-ink);
+}
+
+.cv-award-meta,
+.cv-edu-meta {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.55rem;
+  color: var(--cv-muted);
+  font-size: 0.85rem;
+}
+
+.cv-award-summary {
+  margin: 0.35rem 0 0;
+  color: var(--cv-ink);
+  font-size: 0.91rem;
+  line-height: 1.72;
+}
+
+.cv-languages li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.45rem;
+  color: var(--cv-ink);
+  font-size: 0.93rem;
+}
+
+.cv-lang-name {
+  font-weight: 660;
+}
+
+.cv-lang-summary {
+  color: var(--cv-muted);
+}
+
+@media (max-width: 620px) {
+  .cv-resume {
+    padding-top: 0.35rem;
+  }
+
+  .cv-hero {
+    padding-top: 1.1rem;
+  }
+
+  .cv-skills {
+    grid-template-columns: 1fr;
+  }
+}
