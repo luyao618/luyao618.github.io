@@ -1,35 +1,40 @@
 # Chinese strings for the bilingual CV page (/cv/).
-# Kept in a sibling file to _data/cv.yml so RenderCV's strict schema is not
-# disturbed: cv.yml stays the canonical English source for PDF rendering,
-# cv_zh.yml only feeds the Jekyll page.
+# Sibling to _data/cv.yml so RenderCV's strict pydantic schema for cv.yml
+# stays untouched — cv.yml is the canonical English source for the PDF
+# render workflow; this file only feeds the Jekyll page.
 #
-# Section TITLES (the keys in cv.yml's `sections:` map) stay English by
-# decision; this file translates BODY content only. Lists below are ordered
-# to match cv.yml exactly so cv.md can pair items by index.
-# Proper nouns (companies, products, KPIs, tech stack) intentionally stay
-# in English inside the Chinese text, with no parenthetical annotation.
+# Section TITLES (the keys of cv.yml's `sections:`) intentionally stay
+# in English; this file translates BODY content only. Lists below are
+# ordered to match cv.yml exactly so cv.md can pair items by index.
+#
+# Translation policy:
+#   - 专有名词、产品名、技术栈一律保留英文，不加括注
+#   - 数据原样保留（46.3% → 31.93% 等）
+#   - 中英混排时英文术语前后留半角空格
+#   - 量词能省则省（不写"构建一个 agent"，写"构建 agent"）
+#   - 避免英语腔（前提下 / 现已 / 驱动……提升 等）
 
 cv:
   label: 资深软件工程师 · AI-Native 数据与产品系统 · Agent 工程
   location: 中国 苏州
   summary: >-
-    资深软件工程师，十年数据工程、分析与产品系统经验；现已全面转向 AI-Native，
-    在 Microsoft Copilot Mac 团队负责 AI Agent、KG-RAG 系统、遥测管线与跨端质量
-    框架建设。FY25 AI School China 一等奖（独立提交）。活跃的开源贡献者，GitHub
-    累计 1.5K+ stars、189+ 外部贡献 PR。
+    十年数据工程、分析与产品系统经验，目前在 Microsoft Copilot Mac 团队做
+    AI Agent、KG-RAG 系统、遥测管线和跨端质量框架，工作整体已经 AI-Native。
+    FY25 AI School China 一等奖（独立提交）。开源活跃贡献者，GitHub 累计
+    1.5K+ stars、189+ 外部贡献 PR。
 
   experience:
     - position: 资深软件工程师
-      company: Microsoft (STCA WebXT · Copilot Mac · Surfaces Connectivity)
+      company: 微软 (STCA WebXT · Copilot Mac · Surfaces Connectivity)
       location: 中国 苏州
       summary: >-
-        负责 Copilot Mac 与跨端（Mac / iOS / Android / Web / CMC）连接质量的
-        数据、遥测、实验与 AI Agent 工程。担任 squad 的 AI-Native 转型负责人。
+        负责 Copilot Mac 与跨端（Mac / iOS / Android / Web / CMC）连通质量的
+        数据、遥测、实验和 AI Agent 工程；同时担任团队的 AI-Native 转型负责人。
     - position: 资深软件工程师
       company: 小米 (大数据 · 用户画像 · MiPush)
       location: 中国 北京 / 南京
       summary: >-
-        负责换机用户画像标签、MiPush 实时推送统计（PB 级）、MiPush 竞品分析与
+        负责换机用户画像、MiPush 实时推送统计（PB 级）、MiPush 竞品分析，以及
         DMP 特征数据建设。
     - position: 大数据开发工程师
       company: 美图 (风控)
@@ -40,83 +45,85 @@ cv:
       company: 创维酷开 (数据平台)
       location: 中国 深圳
       summary: >-
-        从 0 搭建数据平台 —— DMP 人群圈选、BI ETL、Spark UDF，以及面向智能电视的
-        实时直播流解析。
+        从零搭建数据平台，覆盖 DMP 人群圈选、BI ETL、Spark UDF，以及智能电视
+        端的实时直播流解析。
 
   selected_impact_copilot_mac:
     - bullet: >-
-        **Copilot Mac 留存率（全端 Top 1）**：在搭建 squad 的 ICM 框架、质量看板
-        与 LT/PM 周会节奏后，新用户留存 **24.0% → 31.7%**，回访留存
+        **Copilot Mac 留存率（全端 Top 1）**：搭建团队 ICM 框架、质量看板和
+        每周 LT/PM 评审节奏后，新用户留存 **24.0% → 31.7%**，回访留存
         **59.9% → 73.1%**。
     - bullet: >-
-        **Voice Thumb-Down Rate 46.3% → 31.93%**（从全客户端倒数第二跃升至第一）：
-        通过分阶段 voice telemetry、Voice Quality Dashboard 与 Mac Voice Funnel 实现。
+        **Voice Thumb-Down Rate 46.3% → 31.93%**（从全客户端倒数第二做到第一）：
+        通过分阶段 voice telemetry、Voice Quality Dashboard 和 Mac Voice Funnel
+        实现。
     - bullet: >-
-        **Mac 迁移期遥测回填 + 原生重写**：助推 **WAU 34.1K → 105K**，并进一步
-        达到 **150K（2026 年 2 月，C1 OKR 达成）**；主笔团队级文档 *Copilot Mac
-        Telemetry Guidance*。
+        **Mac 迁移期遥测回填 + 原生重写**：助推 **WAU 34.1K → 105K**，进一步
+        到 **150K（2026 年 2 月，C1 OKR 达成）**；主笔团队级文档
+        *Copilot Mac Telemetry Guidance*。
     - bullet: >-
         **跨端 Connectivity 基线建设**：首次输出与 Mobile 对齐的 Mac chat-funnel
-        KQL、Grafana 看板，以及 iOS 阈值的 Geneva ICM 监控。**Mac no-response
-        基线 = 0.8%（带重试 99.7%）**；量化 Picasso 部署 ↔ Mac actionable-rate
-        关系为 **−1.3% abs**。
+        KQL、Grafana 看板，以及对齐 iOS 阈值的 Geneva ICM 监控。**Mac no-response
+        基线 = 0.8%（带重试 99.7%）**；量化 Picasso 部署对 Mac actionable-rate
+        的影响为 **−1.3% abs**。
     - bullet: >-
-        **CMC 1DS 后台 Tab RCA**：证明 **CMC "incomplete-after-backgrounding"
-        消息中 32–46% 实为 1DS terminal-event 丢失**，并非真实失败。提出
+        **CMC 1DS 后台 Tab RCA**：定位出 **CMC "incomplete-after-backgrounding"
+        消息中 32–46% 来自 1DS terminal-event 丢失**，并非真实失败。提出
         `visibilitychange → hidden` flush + `sendBeacon` 修复方案；AB 读数：
         `chat-resend-fix` Web **−25.3% rel**、`flush-log-on-vis` no-content
         **−34.9%**、App Exit **−11.9%**。
     - bullet: >-
-        **Sev2 P1 事件响应**：以 **~5 天** 端到端推动 cross-Mac empty-scorecard
-        热修（根因：Picasso `x-ceto-ref → x-trace-id`），恢复全部 Mac 实验的
+        **Sev2 P1 事件响应**：**~5 天**端到端推动 cross-Mac empty-scorecard
+        热修复（根因为 Picasso `x-ceto-ref → x-trace-id`），恢复全部 Mac 实验
         scorecard，解锁 Connector-on-Mac 等 October-moment GA。
     - bullet: >-
-        **遥测 PR 14 条** 落地至 `mac`、`app-ios`、`data-schema` 仓库（旗舰：
-        `mac#1790` Mobile-parity、`mac#2651` Onboarding picassoId 队列+回填、
+        遥测 PR **14 条**落地至 `mac`、`app-ios`、`data-schema` 仓库（旗舰：
+        `mac#1790` Mobile-parity、`mac#2651` Onboarding picassoId 队列 + 回填、
         `mac#3278` resend、`data-schema#659`）。
 
   selected_impact_growth:
     - bullet: >-
-        **驱动 Paid Ads ROI 改善**：通过 LTV 建模、归因管线 ownership 与拉新分析
-        推动业务增长，FY25 管理层绩效总结明确点名表彰。
+        **Paid Ads ROI 提升**：以 LTV 建模、归因管线 ownership 和拉新分析做出
+        显著业务增长，FY25 管理层绩效总结明确表彰。
     - bullet: >-
-        **修复 Adjust / 安装渠道 / 遥测三方的渠道归因问题**，影响约 20K 用户，
-        显著提升投放 ROI 与 LTV 报告准确性。
+        **修复影响约 20K 用户的渠道归因问题**：横跨 Adjust、安装渠道与遥测三方，
+        显著改善投放 ROI 与 LTV 报告准确性。
     - bullet: >-
         **Skype Call 1-to-1 成功率 88% → 98%**、**通话质量投诉 30% → 15%**：
         作为 Call Quality 数据 owner，搭建并持续优化 Call Quality Funnel。
     - bullet: >-
         **MiPush · Sales Enablement**：设计购买意图打分模型与 intent-brand 标签，
-        驱动小米商城在手机销售与库存清理上的智能营销。
+        支撑小米商城手机销售与库存清理的智能营销。
 
   selected_impact_data_platform:
     - bullet: >-
         **MiPush 实时推送统计重写**：Flink + Spark Streaming → HBase 管线，
         **PB 级吞吐**、**99% 服务可用性**，分钟级聚合数千万事件。
     - bullet: >-
-        **存储成本下降约 30 万元/月**：通过 MiPush 统计数仓与调度的全面重构实现。
+        **存储成本下降 ~RMB 30 万 / 月**：通过 MiPush 统计数仓与调度的全面
+        重构实现。
     - bullet: >-
-        **Android 手机竞品分析**：覆盖 **中国 90%+ Android 设备保有量**；接手
-        一个月内将与 BCI 的统计误差从 **>50% 压到 10%**；集成 Kylin + Redash
-        提供自助式 OLAP。
+        **Android 手机竞品分析**：覆盖 **中国 90%+ 安卓设备保有量**；接手一个月
+        内将与 BCI 的统计误差从 **>50% 压到 10%**；集成 Kylin + Redash 提供
+        自助式 OLAP。
     - bullet: >-
-        **美图异常检测告警平台**：摄入 **亿级指标**，运行 Prophet / SVMM 时序检测，
+        **美图异常检测告警平台**：摄入 **亿级指标**，跑 Prophet / SVMM 时序检测，
         **精度 98%+**，配套基于 Livy 的 Spark service 接口。
     - bullet: >-
-        **Mac 质量数据运营**：每日/每周约 60 份 OCV 报告，跨 4 个滚动 canvas，
-        作为 squad 的事实信号源；Mac App Rating Worldwide **4.73 → 4.74**。
+        **Mac 质量数据运营**：每日 / 每周共 ~60 份 OCV 报告，跨 4 个滚动 canvas，
+        是团队默认的信号源；Mac App Rating Worldwide **4.73 → 4.74**。
 
   selected_impact_user_profile:
     - bullet: >-
-        **小米换机标签**：定义官方换机分类口径，通过多信号打分模型解决多卡多机
-        case。**准确率 90%+、月活覆盖率 80%**；被集团战略办公室采纳为品牌忠诚度
-        标准。
+        **小米换机标签**：定义官方换机口径，并用多信号打分模型解决多卡多机
+        场景。**准确率 90%+、月活覆盖 80%**；被集团战略办公室采纳为品牌
+        忠诚度评估标准。
     - bullet: >-
-        **MiPush sales-enablement DMP 标签**：与算法团队联合搭建意图挖掘数仓
+        **MiPush sales-enablement DMP 标签**：联合算法团队搭建意图挖掘数仓
         （30+ 张表）、购买意图 logistic-regression 模型，以及 DMP 特征表。
     - bullet: >-
-        **创维酷开 DMP**：基于用户标签的人群圈选，使用 HyperLogLog 做基数估计
-        加速人群规模预估，自研 Spark UDAF **将新增标签作业耗时缩短 1 小时**。
+        **创维酷开 DMP**：基于用户标签做人群圈选，采用 HyperLogLog 加速人群
+        规模预估，并自研 Spark UDAF **将新增标签作业耗时压短 1 小时**。
     - bullet: >-
         **Bing / SuperApp MiniApp 数据 ownership**：负责 Reward、Wallpaper、
         Weather MiniApp 的增长看板；担任 "Start" app MiniApp 域数据 owner。
@@ -124,26 +131,26 @@ cv:
   ai_agent_engineering:
     - bullet: >-
         🏆 **FY25 AI School China 一等奖（Microsoft，2026 年 2 月）**：
-        全 Microsoft 中国 AI 培训项目仅 **3 组 / 8 位学员** 入选，AI Agents
-        赛道 **独立提交**。
+        全 Microsoft 中国 AI 培训项目共 **3 组 / 8 位学员**入选，AI Agents
+        赛道**独立提交**。
     - bullet: >-
-        **项目：Copilot Mac Data Agent（基于 KG-RAG）**：在 Copilot Mac 团队
-        缺乏数仓、仅有原始 telemetry 的前提下，构建一个 LLM agent 提升 Kusto
-        查询效率。技术栈：**OpenAI Agent SDK + MCP-style tool calling + Neo4j
-        知识图谱 + Kusto connector + Azure Container Registry**；攻克幻觉控制、
-        Kusto 集群权限、原始遥测数据脏乱等问题。
+        **项目：Copilot Mac Data Agent（KG-RAG 驱动）**：在团队没有数仓、
+        只有原始 telemetry 的情况下，做出 LLM agent 拉高 Kusto 查询效率。
+        技术栈：**OpenAI Agent SDK + MCP-style tool calling + Neo4j 知识图谱
+        + Kusto connector + Azure Container Registry**；解决幻觉控制、Kusto
+        集群权限和原始遥测脏数据等问题。
     - bullet: >-
-        **squad 级 AI-Native 转型**：个人日均 token 消耗从 **8 个月前的 <1M
-        增长到 2026 年 4 月的 ~100M，约 100× 增长**；**100% 数据工作 AI
+        **团队级 AI-Native 转型**：个人日均 token 消耗 **8 个月内从 <1M
+        升至 ~100M（2026 年 4 月），约 100× 增长**；**100% 数据工作走 AI
         自动化**（KQL/SQL、看板、OCV 报告、AB 读数）。
     - bullet: >-
-        **AI 辅助 RCA 与代码阅读**：使用 LLM-assisted 多轮源码阅读穿透 Chromium
-        1DS SDK 与 Picasso 源码，直接打通 CMC bot filter 与 1DS terminal-event
-        丢失的 RCA。
+        **AI 辅助 RCA 与代码阅读**：用 LLM 多轮辅助阅读穿透 Chromium 1DS SDK
+        与 Picasso 源码，直接打通 CMC bot filter 与 1DS terminal-event 丢失的
+        RCA。
     - bullet: >-
         **内部技术分享 — "Copilot Mac Data Agent powered by KG-RAG"**：
-        架构走查、真实工程难点与 working prototype demo；主笔 *Mac-on-
-        Chromium 3-Track Telemetry Architecture* canvas。
+        架构走查、工程难点与可运行 prototype demo；同时主笔
+        *Mac-on-Chromium 3-Track Telemetry Architecture* canvas。
 
   open_source_projects:
     - name: "Claude-Code-Source-Study  ⭐ 1.5k+ / 🍴 530+"
@@ -152,23 +159,23 @@ cv:
         最具参考价值的 Claude Code 内核解读。
     - name: "NousResearch/hermes-agent  (⭐ 187k) — 核心贡献者"
       summary: >-
-        在快速增长的 AI agent 框架上 **15 个 commit 合入 `main`**，覆盖 ACP
-        协议、agent runtime、配置、工具，以及 Discord / Telegram / Desktop /
-        Gateway 通道。
+        在快速增长的 AI agent 框架上 **15 个 commit 合入 `main`**，覆盖
+        ACP 协议、agent runtime、配置、工具，以及 Discord / Telegram /
+        Desktop / Gateway 通道。
     - name: "openclaw/openclaw  (⭐ 378k) — 贡献者"
       summary: >-
-        在 GitHub 最高 star 的 AI 助手项目之一上 **8 个 commit 合入 `main`**，
+        在 GitHub star 最高的 AI 助手项目之一上 **8 个 commit 合入 `main`**，
         覆盖消息适配（Matrix / GoogleChat）、agent dispatch 与传输层。
-    - name: "自建的 AI-Native 开发者工具"
+    - name: "自研 AI-Native 开发者工具集"
       summary: >-
-        AI-Native 小工具生态 —— **skila**（AI agent skill 生命周期控制器）、
-        **voice-buddy**（Claude Code 语音）、**code-while-shit**（远程驱动 AI
-        编码）、**Claude-Code-Data-Studios**（Claude Code 的 data scientist
-        人格）、**dashboard-gen-skill** 等。
+        AI-Native 工具生态：**skila**（AI agent skill 生命周期控制器）、
+        **voice-buddy**（Claude Code 语音）、**code-while-shit**（远程驱动
+        AI 编码）、**Claude-Code-Data-Studios**（Claude Code 的 data
+        scientist 人格）、**dashboard-gen-skill** 等。
     - name: "GitHub 活动"
       summary: >-
-        近期 **621 个 PR / 189 个外部贡献 PR**；GitHub `luyao618` · 27 个
-        public repo · 16 个原创 repo，累计 **1,613 stars / 556 forks**。
+        近期 **621 个 PR / 189 个外部贡献 PR**；GitHub `luyao618` ·
+        27 个 public repo · 16 个原创 repo，累计 **1,613 stars / 556 forks**。
 
   skills:
     - name: AI / Agents
@@ -180,21 +187,21 @@ cv:
 
   writing_talks:
     - bullet: >-
-        **Claude-Code-Source-Study**：开源长文系列（⭐ 1.5k+），中文社区最具影响力
-        的 Claude Code 内核研究参考。
+        **Claude-Code-Source-Study**：开源长文系列（⭐ 1.5k+），中文社区影响力
+        最高的 Claude Code 内核研究参考。
     - bullet: >-
         **内部技术分享 — "Copilot Mac Data Agent powered by KG-RAG"**：面向
         Copilot Mac 团队的架构、工程难点与 live demo。
     - bullet: >-
-        **Copilot Mac Telemetry Guidance**：被 Wicresoft 等合作工程团队与内部
-        squad 采纳为团队遥测标准的内部权威文档。
+        **Copilot Mac Telemetry Guidance**：被 Wicresoft 等合作工程团队和内部
+        团队采纳为团队遥测标准的内部权威文档。
     - bullet: >-
         **Mac-on-Chromium 3-Track Telemetry Architecture** canvas；以及作为
-        squad 周度信号节奏的 Daily Check History / OCV / App-rating 滚动 canvas。
+        团队周度信号节奏的 Daily Check History / OCV / App-rating 滚动 canvas。
     - bullet: >-
         **跨职能 playbook**：Mac Connectivity Unresponsive Analytics、
         C1 baseline / C1-sustain canvas、单用户 ±100 事件 Kusto 模板（已在
-        squad 内复用）。
+        团队内复用）。
     - bullet: >-
         **知乎（zhihu.com/people/LuisHome）**：长文写作，主题覆盖 AI agent、
         数据系统与工程实践。
@@ -203,22 +210,22 @@ cv:
     - title: 一等奖 · FY25 AI School China
       awarder: Microsoft
       summary: >-
-        全 Microsoft 中国 AI 培训项目 Top 8 学员，AI Agents 赛道 **独立提交**
+        全 Microsoft 中国 AI 培训项目 Top 8 学员，AI Agents 赛道**独立提交**
         *Copilot Mac Data Agent (KG-RAG)*；从 4 个赛道（AI Agents / RAG /
-        Fine-tuning / Multimodal）的 9 个决赛项目中胜出。
-    - title: 管理层表彰 — "驱动 Paid Ads ROI 提升"
+        Fine-tuning / Multimodal）共 9 个决赛项目中胜出。
+    - title: 管理层表彰 — "Paid Ads ROI 提升"
       awarder: Microsoft · FY25 绩效总结
       summary: >-
-        在 FY25 管理层评语中明确点名表彰，与 "为 Copilot Mac 搭建基础系统"
+        在 FY25 管理层评语中明确表彰，与 "为 Copilot Mac 搭建基础系统"
         并列。
-    - title: 跨团队感谢 — Empty-Scorecard P1 热修
+    - title: 跨团队致谢 — Empty-Scorecard P1 紧急修复
       awarder: Microsoft Copilot Mac LT
       summary: >-
-        Dave Lakshmanan 与 Max He 致谢，~5 天端到端推动 empty-scorecard P1
-        热修，解锁 October-moment GA。
+        Dave Lakshmanan 与 Max He 致谢，~5 天端到端推动 empty-scorecard
+        P1 紧急修复，解锁 October-moment GA。
 
   education:
-    - institution: 湖南大学（985）
+    - institution: 湖南大学
       area: 信息与计算科学
       study_type: 学士
       location: 中国 长沙
