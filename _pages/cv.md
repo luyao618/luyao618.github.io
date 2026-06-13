@@ -409,6 +409,7 @@ PR #7.
       }
 
       applyLanguageToToc(language);
+      verifyTocFirstEntry();
       storeLanguage(language);
     };
 
