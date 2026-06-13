@@ -4,5 +4,56 @@ github_users:
 repo_description_lines_max: 2
 
 github_repos:
-  - luyao618/luyao618.github.io
-  - luyao618/al-folio
+  - luyao618/skila
+  - luyao618/watch-claw
+  - luyao618/voice-buddy
+  - luyao618/code-while-shit
+  - luyao618/Claude-Code-Source-Study
+  - luyao618/Hermes-Source-Code-Study
+  - luyao618/golden-flower
+  - luyao618/breakout-maker
+
+github_repo_categories:
+  - title: Productivity Tools
+    repositories:
+      - name: fawn
+        icon: 🦌
+        repository: luyao618/fawn
+        show_card: false # GitHub API currently returns 404, so keep this as text-only for now.
+        description: An agent for my baby — new-parent advisor and steward of family data, photos, and videos
+      - name: skila
+        icon: 🛠️
+        repository: luyao618/skila
+        description: Skill lifecycle manager for AI agents — discover, evolve, and organize skills in one place
+      - name: watch-claw
+        icon: 🐾
+        repository: luyao618/watch-claw
+        description: OpenClaw House — a pixel-art character that embodies OpenClaw's state
+      - name: voice-buddy
+        icon: 🗣️
+        repository: luyao618/voice-buddy
+        description: Make Claude Code talk to you — and voice-call you back when it needs you
+      - name: code-while-shit
+        icon: 🚽
+        repository: luyao618/code-while-shit
+        description: Vibe-code while doing your business — remote-control Claude Code / Codex / OpenCode from chat
+  - title: 📚 Source Code Studies
+    repositories:
+      - name: Claude-Code-Source-Study
+        icon: 📚
+        repository: luyao618/Claude-Code-Source-Study
+        description: ⭐ 1.5k+ — learning from one of the best agent implementations out there
+      - name: Hermes-Source-Code-Study
+        icon: 📚
+        repository: luyao618/Hermes-Source-Code-Study
+        description: A deep read of the Hermes Agent source — already made me a Hermes contributor 😎
+  - title: 🎮 AI Games
+    repositories:
+      - name: golden-flower
+        icon: 🌸
+        repository: luyao618/golden-flower
+        description: Web Zha Jin Hua (Three-Card Poker) against five different LLM-powered opponents
+      - name: breakout-maker
+        icon: 🧱
+        repository: luyao618/breakout-maker
+        description: LLM-generated Breakout maps — or upload a photo of someone you can't stand and smash it

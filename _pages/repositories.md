@@ -35,7 +35,39 @@ nav_order: 3
 {% endif %}
 {% endif %}
 
-{% if site.data.repositories.github_repos %}
+{% assign repo_categories = site.data.repositories.github_repo_categories %}
+
+{% if repo_categories %}
+
+{% for category in repo_categories %}
+
+## {{ category.title }}
+
+<ul class="list-unstyled">
+  {% for repo in category.repositories %}
+    <li class="mb-2">
+      {% if repo.show_card == false %}
+        <strong>{{ repo.icon }} {{ repo.name }}</strong>
+      {% else %}
+        <a href="https://github.com/{{ repo.repository }}"><strong>{{ repo.icon }} {{ repo.name }}</strong></a>
+      {% endif %}
+      {% if repo.description %}
+        <span class="text-muted">&mdash; {{ repo.description }}</span>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+<div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
+  {% for repo in category.repositories %}
+    {% unless repo.show_card == false %}
+      {% include repository/repo.liquid repository=repo.repository %}
+    {% endunless %}
+  {% endfor %}
+</div>
+
+{% endfor %}
+
+{% elsif site.data.repositories.github_repos %}
 
 ## GitHub Repositories
 
