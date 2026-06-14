@@ -119,20 +119,34 @@ body.dark .cv-resume {
 }
 
 .cv-section {
-  padding: clamp(1.6rem, 3.5vw, 2.4rem) 0 0;
+  padding: clamp(2rem, 4vw, 2.9rem) 0 0;
 }
 
 .cv-section + .cv-section {
+  margin-top: clamp(1.4rem, 3vw, 2.1rem);
   border-top: 1px solid color-mix(in srgb, var(--cv-line) 70%, transparent);
 }
 
 .cv-section-title {
-  margin: 0 0 1.1rem;
-  color: var(--cv-warm);
-  font-size: 0.78rem;
+  position: relative;
+  margin: 0 0 1.5rem;
+  padding: 0 0 0.55rem;
+  color: var(--cv-ink);
+  font-size: clamp(1.3rem, 1.6vw, 1.55rem);
   font-weight: 760;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 1.2;
+}
+
+.cv-section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 2.4rem;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--cv-accent);
 }
 
 /* Experience timeline ---------------------------------------------------- */
@@ -141,46 +155,47 @@ body.dark .cv-resume {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 1.4rem;
+  gap: 1.7rem;
 }
 
 .cv-timeline-item {
-  padding-left: 1rem;
-  border-left: 2px solid color-mix(in srgb, var(--cv-line) 80%, transparent);
+  padding-left: 1.1rem;
+  border-left: 2px solid color-mix(in srgb, var(--cv-accent) 32%, var(--cv-line));
 }
 
 .cv-role-head {
   display: grid;
-  gap: 0.25rem;
-  margin-bottom: 0.55rem;
+  gap: 0.3rem;
+  margin-bottom: 0.65rem;
 }
 
 .cv-role-title {
   margin: 0;
   color: var(--cv-ink);
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: 1.12rem;
+  font-weight: 720;
+  line-height: 1.35;
 }
 
 .cv-role-meta {
   margin: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.2rem 0.85rem;
+  gap: 0.2rem 0.95rem;
   color: var(--cv-muted);
-  font-size: 0.86rem;
+  font-size: 0.88rem;
 }
 
 .cv-role-company {
-  color: color-mix(in srgb, var(--cv-ink) 78%, var(--cv-muted));
-  font-weight: 620;
+  color: color-mix(in srgb, var(--cv-ink) 80%, var(--cv-muted));
+  font-weight: 640;
 }
 
 .cv-role-summary {
   margin: 0;
   color: var(--cv-ink);
-  font-size: 0.93rem;
-  line-height: 1.72;
+  font-size: 0.95rem;
+  line-height: 1.78;
 }
 
 /* Bullet sections (impact / AI agents / writing) ------------------------- */
@@ -189,21 +204,21 @@ body.dark .cv-resume {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.75rem;
+  gap: 0.85rem;
 }
 
 .cv-bullets > li {
   position: relative;
-  padding-left: 1.1rem;
+  padding-left: 1.25rem;
   color: var(--cv-ink);
-  font-size: 0.93rem;
-  line-height: 1.72;
+  font-size: 0.95rem;
+  line-height: 1.78;
 }
 
 .cv-bullets > li::before {
   content: "";
   position: absolute;
-  top: 0.65rem;
+  top: 0.7rem;
   left: 0;
   width: 0.42rem;
   height: 0.42rem;
@@ -215,25 +230,49 @@ body.dark .cv-resume {
   margin: 0;
 }
 
+.cv-bullets a,
+.cv-project-summary a,
+.cv-role-summary a,
+.cv-award-summary a {
+  color: var(--cv-accent);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--cv-accent) 35%, transparent);
+  transition:
+    color 140ms ease,
+    border-color 140ms ease;
+}
+
+.cv-bullets a:hover,
+.cv-project-summary a:hover,
+.cv-role-summary a:hover,
+.cv-award-summary a:hover {
+  color: var(--cv-accent);
+  border-bottom-color: var(--cv-accent);
+}
+
 /* Open-source projects --------------------------------------------------- */
 .cv-projects {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 1rem;
+  gap: 1.15rem;
 }
 
 .cv-project-name {
-  margin: 0 0 0.25rem;
-  font-size: 0.98rem;
-  font-weight: 700;
+  margin: 0 0 0.3rem;
+  font-size: 1.02rem;
+  font-weight: 720;
+  line-height: 1.35;
 }
 
 .cv-project-name a {
   color: var(--cv-ink);
   text-decoration: none;
-  border-bottom: 1px dashed transparent;
+  border-bottom: 1px solid color-mix(in srgb, var(--cv-accent) 35%, transparent);
+  transition:
+    color 140ms ease,
+    border-color 140ms ease;
 }
 
 .cv-project-name a:hover {
@@ -243,8 +282,8 @@ body.dark .cv-resume {
 
 .cv-project-summary {
   color: var(--cv-ink);
-  font-size: 0.92rem;
-  line-height: 1.72;
+  font-size: 0.94rem;
+  line-height: 1.78;
 }
 
 .cv-project-summary p {
@@ -261,18 +300,22 @@ body.dark .cv-resume {
 .cv-skill-group {
   border: 1px solid color-mix(in srgb, var(--cv-line) 80%, transparent);
   border-radius: 6px;
-  padding: 0.85rem 1rem 0.95rem;
+  padding: 0.95rem 1.05rem 1.05rem;
   background: color-mix(in srgb, var(--cv-soft) 60%, transparent);
 }
 
 .cv-skill-name {
-  margin: 0 0 0.55rem;
+  margin: 0 0 0.6rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--cv-warm);
-  font-size: 0.92rem;
+  color: var(--cv-ink);
+  font-size: 0.96rem;
   font-weight: 720;
+}
+
+.cv-skill-name i {
+  color: var(--cv-accent);
 }
 
 .cv-skill-keywords {
@@ -281,16 +324,16 @@ body.dark .cv-resume {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
 .cv-skill-keywords li {
-  padding: 0.18rem 0.55rem;
+  padding: 0.2rem 0.6rem;
   border: 1px solid color-mix(in srgb, var(--cv-line) 86%, transparent);
   border-radius: 999px;
   background: transparent;
   color: var(--cv-muted);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   line-height: 1.4;
 }
 
@@ -302,15 +345,16 @@ body.dark .cv-resume {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.95rem;
+  gap: 1.1rem;
 }
 
 .cv-award-title,
 .cv-edu-school {
-  margin: 0 0 0.18rem;
-  font-size: 0.98rem;
-  font-weight: 700;
+  margin: 0 0 0.22rem;
+  font-size: 1.02rem;
+  font-weight: 720;
   color: var(--cv-ink);
+  line-height: 1.35;
 }
 
 .cv-award-meta,
@@ -318,16 +362,16 @@ body.dark .cv-resume {
   margin: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.2rem 0.55rem;
+  gap: 0.2rem 0.6rem;
   color: var(--cv-muted);
-  font-size: 0.85rem;
+  font-size: 0.86rem;
 }
 
 .cv-award-summary {
-  margin: 0.35rem 0 0;
+  margin: 0.4rem 0 0;
   color: var(--cv-ink);
-  font-size: 0.91rem;
-  line-height: 1.72;
+  font-size: 0.93rem;
+  line-height: 1.78;
 }
 
 .cv-languages li {
@@ -336,11 +380,11 @@ body.dark .cv-resume {
   align-items: baseline;
   gap: 0.45rem;
   color: var(--cv-ink);
-  font-size: 0.93rem;
+  font-size: 0.95rem;
 }
 
 .cv-lang-name {
-  font-weight: 660;
+  font-weight: 680;
 }
 
 .cv-lang-summary {
@@ -358,5 +402,41 @@ body.dark .cv-resume {
 
   .cv-skills {
     grid-template-columns: 1fr;
+  }
+
+  .cv-section-title {
+    font-size: 1.18rem;
+  }
+}
+
+/* Print --------------------------------------------------------------- */
+@media print {
+  .cv-resume {
+    --cv-ink: #111;
+    --cv-muted: #444;
+    --cv-line: #cfcfcf;
+    --cv-accent: #1f5d58;
+    padding-bottom: 0;
+  }
+
+  .cv-section {
+    break-inside: avoid;
+    padding-top: 1.2rem;
+  }
+
+  .cv-section + .cv-section {
+    margin-top: 0.8rem;
+  }
+
+  .cv-section-title {
+    font-size: 1.08rem;
+  }
+
+  .cv-bullets > li,
+  .cv-timeline-item,
+  .cv-projects > li,
+  .cv-awards > li,
+  .cv-education > li {
+    break-inside: avoid;
   }
 }
