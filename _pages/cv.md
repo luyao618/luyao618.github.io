@@ -5,7 +5,7 @@ title: cv
 nav: true
 nav_order: 4
 description: Yao Lu (鹿尧) — Senior Software Engineer · AI-Native Data & Product Systems · Agent Engineering. Microsoft Copilot Mac · ex-Xiaomi · Hunan University.
-description_zh: 鹿尧的简历（中英双语） — 资深软件工程师、AI-Native 数据与产品系统、Agent 工程；Microsoft Copilot Mac，前小米，湖南大学。
+description_zh: 鹿尧的简历（中英双语） — 高级软件工程师、AI-Native 数据与产品系统、Agent 工程；Microsoft Copilot Mac，前小米，湖南大学。
 ---
 
 {% assign cv = site.data.cv.cv %}
@@ -21,7 +21,7 @@ is not affected; the canonical English source still drives the PDF render.
 Section titles (the keys of cv.sections) intentionally stay in English
 per project decision; only body content is bilingual.
 
-The Selected Impact sections are unrolled (rather than driven by a Liquid
+The capability-highlight sections are unrolled (rather than driven by a Liquid
 loop over a string-split array) because Jekyll's strict-Liquid setting
 resolved the dynamic key lookup `cv_zh[zh_key]` to nil under some
 conditions, silently triggering the `| default: entry.bullet` fallback
@@ -32,17 +32,27 @@ PR #7.
 <main class="cv-resume" aria-label="CV of Yao Lu">
   <section class="cv-hero">
     <div class="cv-hero-copy">
-      <p class="cv-kicker">CV · Yao Lu (鹿尧)</p>
+      <p class="cv-kicker">Big Data Engineer · Full-Stack Builder · AI Agent Developer</p>
       <h1 class="cv-title">
-        <span data-lang="zh">{{ cv.name }}</span>
+        <span data-lang="zh">{{ cv_zh.name | default: cv.name }}</span>
         <span data-lang="en">{{ cv.name }}</span>
       </h1>
       <p class="cv-subtitle">
-        <span data-lang="zh">{{ cv_zh.label }}</span>
-        <span data-lang="en">{{ cv.label }}</span>
+        <span class="cv-subtitle-line" data-lang="zh">
+          {% assign zh_label_parts = cv_zh.label | split: ' · ' %}
+          {% for label_part in zh_label_parts %}
+            <span class="cv-subtitle-segment">{{ label_part }}</span>
+          {% endfor %}
+        </span>
+        <span class="cv-subtitle-line" data-lang="en">
+          {% assign en_label_parts = cv.label | split: ' · ' %}
+          {% for label_part in en_label_parts %}
+            <span class="cv-subtitle-segment">{{ label_part }}</span>
+          {% endfor %}
+        </span>
       </p>
       <div class="cv-summary" data-lang="zh">
-        <p>{{ cv_zh.summary }}</p>
+        <p>{{ cv_zh.summary | replace: '。 ', '。' | replace: '， ', '，' | replace: '、 ', '、' | replace: '； ', '；' | replace: '被 ', '被' }}</p>
       </div>
       <div class="cv-summary" data-lang="en">
         <p>{{ cv.summary }}</p>
@@ -62,25 +72,14 @@ PR #7.
           <span data-lang="zh">{{ cv_zh.location }}</span>
           <span data-lang="en">{{ cv.location }}</span>
         </li>
-        <li>
-          <i class="fa-solid fa-globe" aria-hidden="true"></i>
-          <a href="{{ cv.website }}">{{ cv.website | replace: 'https://', '' }}</a>
-        </li>
-        {% for s in cv.social_networks %}
-          <li>
-            {% if s.network == 'GitHub' %}
-              <i class="fa-brands fa-github" aria-hidden="true"></i>
-              <a href="https://github.com/{{ s.username }}">github.com/{{ s.username }}</a>
-            {% elsif s.network == 'Zhihu' %}
-              <span class="cv-zhihu-mark" aria-hidden="true">知</span>
-              <a href="https://www.zhihu.com/people/{{ s.username }}">zhihu.com/people/{{ s.username }}</a>
-            {% else %}
-              <i class="fa-solid fa-link" aria-hidden="true"></i>
-              <span>{{ s.network }} · {{ s.username }}</span>
-            {% endif %}
-          </li>
-        {% endfor %}
       </ul>
+
+      <div class="cv-actions" aria-label="CV actions">
+        <a class="cv-download-button" href="{{ '/assets/pdf/luyao-cv.pdf' | relative_url }}" download>
+          <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+          <span>Download PDF CV</span>
+        </a>
+      </div>
     </div>
 
   </section>
@@ -110,81 +109,147 @@ PR #7.
               </span>
             </p>
           </header>
-          <p class="cv-role-summary" data-lang="zh">{{ zh_role.summary | default: role.summary }}</p>
+          {% assign zh_role_summary = zh_role.summary | default: role.summary %}
+          <p class="cv-role-summary" data-lang="zh">{{ zh_role_summary | replace: '。 ', '。' | replace: '， ', '，' | replace: '、 ', '、' | replace: '； ', '；' | replace: '被 ', '被' }}</p>
           <p class="cv-role-summary" data-lang="en">{{ role.summary }}</p>
+          {% if zh_role.projects %}
+            <ul class="cv-role-projects" data-lang="zh">
+              {% for project in zh_role.projects %}
+                <li>
+                  <p class="cv-role-project-head">
+                    <span class="cv-role-project-period">{{ project.period }}</span>
+                    <span class="cv-role-project-name">{{ project.name }}</span>
+                  </p>
+                  <p class="cv-role-project-summary">{{ project.summary | replace: '。 ', '。' | replace: '， ', '，' | replace: '、 ', '、' | replace: '； ', '；' | replace: '被 ', '被' }}</p>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          {% if role.highlights %}
+            <ul class="cv-role-projects" data-lang="en">
+              {% for highlight in role.highlights %}
+                <li>
+                  <div class="cv-role-project-summary">{{ highlight | markdownify }}</div>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
         </li>
       {% endfor %}
     </ol>
   </section>
 
   <section class="cv-section">
-    <h2 class="cv-section-title">Selected Impact · Copilot Mac &amp; Connectivity Quality</h2>
-    <ul class="cv-bullets">
-      {% for entry in sections["Selected Impact · Copilot Mac & Connectivity Quality"] %}
-        {% assign zh_entry = cv_zh.selected_impact_copilot_mac[forloop.index0] %}
-        <li>
-          <div data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | markdownify }}</div>
-          <div data-lang="en">{{ entry.bullet | markdownify }}</div>
-        </li>
-      {% endfor %}
-    </ul>
-  </section>
+    <h2 class="cv-section-title">Capability Highlights</h2>
+    <ol class="cv-timeline cv-capability-timeline">
+      <li class="cv-timeline-item cv-capability-item">
+        <header class="cv-role-head">
+          <h3 class="cv-role-title">
+            <span data-lang="zh">大数据</span>
+            <span data-lang="en">Big Data</span>
+          </h3>
+          <p class="cv-role-meta">
+            <span class="cv-role-company" data-lang="zh">数仓 / 实时计算 / 数据分析 / 指标体系</span>
+            <span class="cv-role-company" data-lang="en">Data Warehouse / Real-Time Computing / Analytics / Metrics</span>
+          </p>
+        </header>
+        <ul class="cv-role-projects cv-capability-points">
+          {% for entry in sections["Capability Highlights · Data Engineering & Analytics"] %}
+            {% assign zh_entry = cv_zh.capability_data[forloop.index0] %}
+            <li>
+              <div class="cv-role-project-summary" data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | replace: '。 ', '。' | replace: '， ', '，' | replace: '、 ', '、' | replace: '； ', '；' | replace: '被 ', '被' | markdownify }}</div>
+              <div class="cv-role-project-summary" data-lang="en">{{ entry.bullet | markdownify }}</div>
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
 
-  <section class="cv-section">
-    <h2 class="cv-section-title">Selected Impact · Growth Analytics &amp; Paid Ads</h2>
-    <ul class="cv-bullets">
-      {% for entry in sections["Selected Impact · Growth Analytics & Paid Ads"] %}
-        {% assign zh_entry = cv_zh.selected_impact_growth[forloop.index0] %}
-        <li>
-          <div data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | markdownify }}</div>
-          <div data-lang="en">{{ entry.bullet | markdownify }}</div>
-        </li>
-      {% endfor %}
-    </ul>
-  </section>
+      <li class="cv-timeline-item cv-capability-item">
+        <header class="cv-role-head">
+          <h3 class="cv-role-title">
+            <span data-lang="zh">全栈开发</span>
+            <span data-lang="en">Full-Stack Development</span>
+          </h3>
+          <p class="cv-role-meta">
+            <span class="cv-role-company" data-lang="zh">云服务 / 客户端 / 内部工具 / 开源贡献</span>
+            <span class="cv-role-company" data-lang="en">Cloud Services / Client / Internal Tools / Open Source</span>
+          </p>
+        </header>
+        <ul class="cv-role-projects cv-capability-points">
+          {% for entry in sections["Capability Highlights · Full-Stack Product Engineering"] %}
+            {% assign zh_entry = cv_zh.capability_full_stack[forloop.index0] %}
+            <li>
+              <div class="cv-role-project-summary" data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | replace: '。 ', '。' | replace: '， ', '，' | replace: '、 ', '、' | replace: '； ', '；' | replace: '被 ', '被' | markdownify }}</div>
+              <div class="cv-role-project-summary" data-lang="en">{{ entry.bullet | markdownify }}</div>
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
 
-  <section class="cv-section">
-    <h2 class="cv-section-title">Selected Impact · Data Platform / Warehouse / Observability</h2>
-    <ul class="cv-bullets">
-      {% for entry in sections["Selected Impact · Data Platform / Warehouse / Observability"] %}
-        {% assign zh_entry = cv_zh.selected_impact_data_platform[forloop.index0] %}
-        <li>
-          <div data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | markdownify }}</div>
-          <div data-lang="en">{{ entry.bullet | markdownify }}</div>
-        </li>
-      {% endfor %}
-    </ul>
-  </section>
+      <li class="cv-timeline-item cv-capability-item">
+        <header class="cv-role-head">
+          <h3 class="cv-role-title">
+            <span data-lang="zh">AI Agent</span>
+            <span data-lang="en">AI Agent Engineering</span>
+          </h3>
+          <p class="cv-role-meta">
+            <span class="cv-role-company" data-lang="zh">RAG / MCP / AI Native Workflow</span>
+            <span class="cv-role-company" data-lang="en">RAG / MCP / AI-Native Workflow</span>
+          </p>
+        </header>
+        <ul class="cv-role-projects cv-capability-points">
+          {% for entry in sections["Capability Highlights · AI Agent Engineering"] %}
+            {% assign zh_entry = cv_zh.capability_ai_agent[forloop.index0] %}
+            <li>
+              <div class="cv-role-project-summary" data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | replace: '。 ', '。' | replace: '， ', '，' | replace: '、 ', '、' | replace: '； ', '；' | replace: '被 ', '被' | markdownify }}</div>
+              <div class="cv-role-project-summary" data-lang="en">{{ entry.bullet | markdownify }}</div>
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+    </ol>
 
-  <section class="cv-section">
-    <h2 class="cv-section-title">Selected Impact · User Profile &amp; Recommendation / Data Science</h2>
-    <ul class="cv-bullets">
-      {% for entry in sections["Selected Impact · User Profile & Recommendation / Data Science"] %}
-        {% assign zh_entry = cv_zh.selected_impact_user_profile[forloop.index0] %}
-        <li>
-          <div data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | markdownify }}</div>
-          <div data-lang="en">{{ entry.bullet | markdownify }}</div>
-        </li>
-      {% endfor %}
-    </ul>
-  </section>
-
-  <section class="cv-section">
-    <h2 class="cv-section-title">AI Agent &amp; AI-Native Engineering</h2>
-    <ul class="cv-bullets">
-      {% for entry in sections["AI Agent & AI-Native Engineering"] %}
-        {% assign zh_entry = cv_zh.ai_agent_engineering[forloop.index0] %}
-        <li>
-          <div data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | markdownify }}</div>
-          <div data-lang="en">{{ entry.bullet | markdownify }}</div>
-        </li>
-      {% endfor %}
-    </ul>
   </section>
 
   <section class="cv-section">
     <h2 class="cv-section-title">Open Source Projects</h2>
-    <ul class="cv-projects">
+    <div class="cv-oss-overview">
+      <a class="cv-oss-profile" href="https://github.com/luyao618">
+        <i class="fa-brands fa-github" aria-hidden="true"></i>
+        <span>github.com/luyao618</span>
+      </a>
+      <dl class="cv-oss-stats" aria-label="GitHub public metrics">
+        <div>
+          <dt>27</dt>
+          <dd>
+            <span data-lang="zh">公开仓库</span>
+            <span data-lang="en">public repos</span>
+          </dd>
+        </div>
+        <div>
+          <dt>16</dt>
+          <dd>
+            <span data-lang="zh">原创仓库</span>
+            <span data-lang="en">original repos</span>
+          </dd>
+        </div>
+        <div>
+          <dt>1,618</dt>
+          <dd>
+            <span data-lang="zh">原创 stars</span>
+            <span data-lang="en">repo stars</span>
+          </dd>
+        </div>
+        <div>
+          <dt>556</dt>
+          <dd>
+            <span data-lang="zh">原创 forks</span>
+            <span data-lang="en">repo forks</span>
+          </dd>
+        </div>
+      </dl>
+    </div>
+    <ul class="cv-projects cv-oss-projects">
       {% for project in sections["Open Source Projects"] %}
         {% assign zh_proj = cv_zh.open_source_projects[forloop.index0] %}
         <li>
@@ -194,7 +259,13 @@ PR #7.
               <span data-lang="en">{{ project.name }}</span>
             </a>
           </h3>
-          <div class="cv-project-summary" data-lang="zh">{{ zh_proj.summary | default: project.summary | markdownify }}</div>
+          {% if zh_proj.meta or project.meta %}
+            <p class="cv-project-meta">
+              <span data-lang="zh">{{ zh_proj.meta | default: project.meta }}</span>
+              <span data-lang="en">{{ project.meta }}</span>
+            </p>
+          {% endif %}
+          <div class="cv-project-summary" data-lang="zh">{{ zh_proj.summary | default: project.summary | replace: '。 ', '。' | replace: '， ', '，' | replace: '、 ', '、' | replace: '； ', '；' | replace: '被 ', '被' | markdownify }}</div>
           <div class="cv-project-summary" data-lang="en">{{ project.summary | markdownify }}</div>
         </li>
       {% endfor %}
@@ -221,19 +292,6 @@ PR #7.
   </section>
 
   <section class="cv-section">
-    <h2 class="cv-section-title">Writing / Talks / Knowledge Sharing</h2>
-    <ul class="cv-bullets">
-      {% for entry in sections["Writing / Talks / Knowledge Sharing"] %}
-        {% assign zh_entry = cv_zh.writing_talks[forloop.index0] %}
-        <li>
-          <div data-lang="zh">{{ zh_entry.bullet | default: entry.bullet | markdownify }}</div>
-          <div data-lang="en">{{ entry.bullet | markdownify }}</div>
-        </li>
-      {% endfor %}
-    </ul>
-  </section>
-
-  <section class="cv-section">
     <h2 class="cv-section-title">Awards</h2>
     <ul class="cv-awards">
       {% for award in sections.Awards %}
@@ -248,7 +306,7 @@ PR #7.
             <span data-lang="en">{{ award.awarder }}</span>
             <span class="cv-award-date">· {{ award.date }}</span>
           </p>
-          <div class="cv-award-summary" data-lang="zh">{{ zh_award.summary | default: award.summary | markdownify }}</div>
+          <div class="cv-award-summary" data-lang="zh">{{ zh_award.summary | default: award.summary | replace: '。 ', '。' | replace: '， ', '，' | replace: '、 ', '、' | replace: '； ', '；' | replace: '被 ', '被' | markdownify }}</div>
           <div class="cv-award-summary" data-lang="en">{{ award.summary | markdownify }}</div>
         </li>
       {% endfor %}
