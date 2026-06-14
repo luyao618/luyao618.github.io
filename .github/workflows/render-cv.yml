@@ -1,14 +1,8 @@
 name: Render a CV
 on:
-  push:
-    branches:
-      - main
-      - master
-    paths:
-      - "_data/cv.yml"
-      - "assets/rendercv/design.yaml"
-      - "assets/rendercv/locale.yaml"
-      - "assets/rendercv/settings.yaml"
+  # The detailed CV PDF is now generated from the Jekyll CV page and committed
+  # at assets/pdf/luyao-cv.pdf. Keep this legacy RenderCV job manual-only so
+  # pushes to _data/cv.yml do not race or fail during site deployment.
   workflow_call:
   workflow_dispatch:
 permissions:
