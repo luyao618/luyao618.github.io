@@ -102,6 +102,8 @@ body.dark .resume-home {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
+  max-width: 100%;
   min-height: 2.75rem;
   padding: 0.74rem 1.05rem;
   border: 1px solid var(--resume-accent);
@@ -110,6 +112,8 @@ body.dark .resume-home {
   color: #fff;
   font-size: 0.92rem;
   font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
   text-decoration: none;
   transition:
     transform 160ms ease,
@@ -117,8 +121,14 @@ body.dark .resume-home {
     background 160ms ease;
 }
 
+.resume-button i,
 .resume-button span {
   color: inherit;
+}
+
+.resume-button-secondary {
+  background: transparent;
+  color: var(--resume-accent);
 }
 
 .resume-button:hover {
@@ -126,6 +136,12 @@ body.dark .resume-home {
   text-decoration: none;
   transform: translateY(-1px);
   box-shadow: 0 12px 28px rgba(31, 77, 74, 0.18);
+}
+
+.resume-button-secondary:hover,
+.resume-button-secondary:focus-visible {
+  background: var(--resume-accent-soft);
+  color: var(--resume-accent);
 }
 
 .resume-side {
