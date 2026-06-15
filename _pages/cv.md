@@ -1,7 +1,7 @@
 ---
 layout: default
 permalink: /cv/
-title: cv
+title: resume
 nav: true
 nav_order: 4
 description: Yao Lu (鹿尧) — Senior Software Engineer · AI-Native Data & Product Systems · Agent Engineering. Microsoft Copilot Mac · ex-Xiaomi · Hunan University.
