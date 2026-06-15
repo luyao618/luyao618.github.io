@@ -126,22 +126,11 @@ body.dark .resume-home {
   color: inherit;
 }
 
-.resume-button-secondary {
-  background: transparent;
-  color: var(--resume-accent);
-}
-
 .resume-button:hover {
   color: #fff;
   text-decoration: none;
   transform: translateY(-1px);
   box-shadow: 0 12px 28px rgba(31, 77, 74, 0.18);
-}
-
-.resume-button-secondary:hover,
-.resume-button-secondary:focus-visible {
-  background: var(--resume-accent-soft);
-  color: var(--resume-accent);
 }
 
 .resume-side {

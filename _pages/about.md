@@ -37,7 +37,7 @@ description: 鹿尧的个人简介、联系方式、工作经历和简历下载�
           <span data-lang="zh">下载PDF简历(一页)</span>
           <span data-lang="en">Download One-Page PDF Resume</span>
         </a>
-        <a class="resume-button resume-button-secondary" href="{{ about.profile.resume_detailed | relative_url }}" download>
+        <a class="resume-button" href="{{ about.profile.resume_detailed | relative_url }}" download>
           <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
           <span data-lang="zh">下载PDF简历(详细)</span>
           <span data-lang="en">Download Detailed PDF Resume</span>
