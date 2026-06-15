@@ -10,6 +10,7 @@ description_zh: 鹿尧的简历（中英双语） — 高级软件工程师、AI
 
 {% assign cv = site.data.cv.cv %}
 {% assign cv_zh = site.data.cv_zh.cv %}
+{% assign about = site.data.about %}
 {% assign sections = site.data.cv.cv.sections %}
 
 {% comment %}
@@ -75,9 +76,10 @@ PR #7.
       </ul>
 
       <div class="cv-actions" aria-label="CV actions">
-        <a class="cv-download-button" href="{{ '/assets/pdf/luyao-cv.pdf' | relative_url }}" download>
+        <a class="cv-download-button" href="{{ about.profile.resume | relative_url }}" download>
           <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
-          <span>Download PDF CV</span>
+          <span data-lang="zh">下载PDF简历(一页)</span>
+          <span data-lang="en">Download One-Page PDF Resume</span>
         </a>
       </div>
     </div>

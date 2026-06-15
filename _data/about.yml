@@ -5,6 +5,7 @@ profile:
   location: Suzhou / China
   photo: /assets/img/profile-lu-yao.jpeg
   resume: /assets/pdf/lu-yao-resume.pdf
+  resume_detailed: /assets/pdf/luyao-cv.pdf
   tagline: Big Data Engineer · Full-Stack Builder · AI Agent Developer
   subtitle_en: Senior software engineer with a decade in big data, now building full-stack product systems and AI agent workflows.
   summary:
