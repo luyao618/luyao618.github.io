@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+#
+# Build the site locally and deploy the static output to the VPS.
+#
+#   build (jekyll) -> purge unused CSS -> rsync _site/ to the server
+#
+# The VPS only serves static files; it needs no Ruby toolchain.
+#
+# Usage:
+#   bin/deploy-vps            # build + deploy
+#   bin/deploy-vps --dry-run  # show what rsync would transfer, change nothing
+#   bin/deploy-vps --no-build # skip build, just rsync existing _site/
+
+set -euo pipefail
+
+# --- config -----------------------------------------------------------------
+REMOTE_HOST="root@38.175.199.165"
+REMOTE_DIR="/var/www/blog/"
+SSH_KEY="/Users/yao/work/files/ssh/ZGO-VPS-SSH-KEY"
+SSH_OPTS="-i ${SSH_KEY} -o IdentitiesOnly=yes"
+
+# --- args -------------------------------------------------------------------
+DRY_RUN=""
+DO_BUILD=1
+for arg in "$@"; do
+  case "$arg" in
+    --dry-run) DRY_RUN="--dry-run" ;;
+    --no-build) DO_BUILD=0 ;;
+    -h|--help) grep '^#' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    *) echo "Unknown option: $arg" >&2; exit 1 ;;
+  esac
+done
+
+cd "$(dirname "$0")/.."
+
+# --- locate ruby 3.3 (Homebrew) ---------------------------------------------
+RUBY_PREFIX="$(brew --prefix ruby@3.3 2>/dev/null || true)"
+if [ -n "$RUBY_PREFIX" ] && [ -x "$RUBY_PREFIX/bin/ruby" ]; then
+  export PATH="$RUBY_PREFIX/bin:$PATH"
+fi
+echo "Using ruby: $(ruby -v)"
+
+# --- locate a real node bin dir ---------------------------------------------
+# The interactive shell shadows `node`/`npx` with an fnm lazy-load function,
+# which is unavailable in this non-interactive context. Resolve a concrete
+# node bin directory and prepend it to PATH so `npx` works.
+NODE_BIN=""
+for cand in \
+  "$(command -v node 2>/dev/null || true)" \
+  "$HOME"/.nvm/versions/node/*/bin/node \
+  /opt/homebrew/bin/node; do
+  if [ -x "$cand" ]; then NODE_BIN="$(dirname "$cand")"; break; fi
+done
+if [ -n "$NODE_BIN" ]; then
+  export PATH="$NODE_BIN:$PATH"
+  echo "Using node: $("$NODE_BIN/node" -v)"
+else
+  echo "WARNING: no node found; purgecss will be skipped" >&2
+fi
+
+# --- build ------------------------------------------------------------------
+if [ "$DO_BUILD" -eq 1 ]; then
+  export JEKYLL_ENV=production
+  echo "==> jekyll build"
+  bundle exec jekyll build
+
+  if [ -n "$NODE_BIN" ]; then
+    echo "==> purgecss"
+    "$NODE_BIN/npx" --no-install purgecss -c purgecss.config.js
+  else
+    echo "==> skipping purgecss (no node)"
+  fi
+fi
+
+if [ ! -d _site ]; then
+  echo "ERROR: _site/ does not exist (run without --no-build)" >&2
+  exit 1
+fi
+
+# --- deploy -----------------------------------------------------------------
+echo "==> rsync to ${REMOTE_HOST}:${REMOTE_DIR} ${DRY_RUN}"
+rsync -avz --delete ${DRY_RUN} \
+  -e "ssh ${SSH_OPTS}" \
+  _site/ "${REMOTE_HOST}:${REMOTE_DIR}"
+
+if [ -z "$DRY_RUN" ]; then
+  echo "==> fixing ownership on server"
+  ssh ${SSH_OPTS} "${REMOTE_HOST}" "chown -R www-data:www-data ${REMOTE_DIR}"
+fi
+
+echo "Done. https://luyao.blog/"
